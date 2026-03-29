@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railway.app/at-rules.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "watchPatterns": ["frontend-cliente/**"]
+  },
+  "deploy": {
+    "startCommand": "npx serve -s build",
+    "rootDirectory": "frontend-cliente"
+  }
+}

@@ -1,0 +1,155 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  background-color: #f8fafc;
+}
+
+/* LADO ESQUERDO: IMAGEM */
+.auth-side-image {
+  flex: 1.2;
+  position: relative;
+  background: linear-gradient(rgba(0, 206, 209, 0.8), rgba(0, 174, 176, 0.9)), 
+              url('https://img.freepik.com/fotos-gratis/medicos-discutindo-sobre-um-laptop_23-2148850755.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+  color: white;
+}
+
+.auth-side-image h1 {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.auth-side-image p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* LADO DIREITO: FORMULÁRIO */
+.auth-side-form {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: white;
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-form-container h2 {
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.auth-form-container p {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.input-box {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-box label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-box input:focus {
+  border-color: #00ced1;
+  box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.1);
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.btn-signin {
+  width: 100%;
+  background: #002d72; /* Azul Marinho Profissional */
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-signin:hover { background: #001e4d; }
+
+.social-login {
+  margin-top: 30px;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.btn-google {
+  width: 100%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .auth-side-image { display: none; }
+}
+.auth-switch {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-switch {
+  background: none;
+  border: none;
+  color: #6366f1; /* Cor azulada do seu tema */
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0 5px;
+}
+
+.btn-switch:hover {
+  color: #4f46e5;
+}
