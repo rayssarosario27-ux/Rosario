@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, Activity, Bone, HeartPulse, ShieldCheck, MapPin, Phone, Instagram, MessageCircle } from 'lucide-react';
+import { Stethoscope, Activity, Bone, HeartPulse, ShieldCheck, MapPin, Phone,  MessageCircle } from 'lucide-react';
 import '../styles/Home.css';
 
 const Home = () => {
