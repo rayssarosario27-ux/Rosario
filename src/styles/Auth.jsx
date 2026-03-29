@@ -1,71 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowRight, Stethoscope } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Stethoscope, Mail, Lock, ArrowLeft } from 'lucide-react';
 import '../styles/Auth.css';
 
-export default function Auth() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setIsLogin(params.get('mode') !== 'cadastro');
-  }, [location]);
-
+const Auth = () => {
   return (
-    <div className="auth-page">
-      <div className="auth-bg-pulse"></div> {/* Fundo pulsante */}
+    <div className="auth-wrapper">
+      <Link to="/" className="back-button" style={{ position: 'absolute', top: '20px', left: '20px', textDecoration: 'none', color: '#64748b', display: 'flex', alignItems: 'center', gap: '5px' }}>
+        <ArrowLeft size={18} /> Voltar
+      </Link>
       
       <div className="auth-card">
-        <div className="auth-logo" onClick={() => navigate('/')}>
-          <Stethoscope size={30} color="#4f46e5" />
-          <span>Dr. Eduardo</span>
-        </div>
-
         <div className="auth-header">
-          <h1>{isLogin ? 'Bem-vindo de volta' : 'Criar sua conta'}</h1>
-          <p>{isLogin ? 'Acesse seu painel de saúde' : 'Comece sua jornada de cuidado agora'}</p>
-        </div>
-
-        <div className="auth-tabs">
-          <button className={isLogin ? 'active' : ''} onClick={() => setIsLogin(true)}>Login</button>
-          <button className={!isLogin ? 'active' : ''} onClick={() => setIsLogin(false)}>Cadastro</button>
+          <Stethoscope size={40} color="#4f46e5" style={{ margin: '0 auto' }} />
+          <h2>Dr. Eduardo</h2>
+          <p style={{ color: '#64748b' }}>Acesse sua conta ou cadastre-se</p>
         </div>
 
         <form className="auth-form">
-          {!isLogin && (
-            <div className="input-group">
-              <label>Nome Completo</label>
-              <div className="input-field">
-                <User size={20} /><input type="text" placeholder="Como quer ser chamado?" />
-              </div>
-            </div>
-          )}
           <div className="input-group">
-            <label>E-mail</label>
-            <div className="input-field">
-              <Mail size={20} /><input type="email" placeholder="seu@email.com" />
-            </div>
+            <label><Mail size={14} /> E-mail</label>
+            <input type="email" placeholder="seu@email.com" />
           </div>
+          
           <div className="input-group">
-            <label>Senha</label>
-            <div className="input-field">
-              <Lock size={20} /><input type="password" placeholder="••••••••" />
-            </div>
+            <label><Lock size={14} /> Senha</label>
+            <input type="password" placeholder="••••••••" />
           </div>
 
-          <button type="submit" className="btn-auth-submit">
-            {isLogin ? 'Entrar no Sistema' : 'Finalizar Cadastro'} <ArrowRight size={18} />
-          </button>
+          <button type="submit" className="btn-auth">Entrar na Conta</button>
+          
+          <Link to="#" style={{ fontSize: '14px', color: '#4f46e5', textDecoration: 'none', marginTop: '10px' }}>
+            Esqueceu sua senha?
+          </Link>
         </form>
-
-        {isLogin && (
-          <button className="btn-forgot" onClick={() => navigate('/recuperar-senha')}>
-            Esqueceu a senha?
-          </button>
-        )}
       </div>
     </div>
   );
-}
+};
+
+export default Auth;
