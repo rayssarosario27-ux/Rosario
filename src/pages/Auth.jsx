@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Chrome, Mail, Lock } from 'lucide-react';
+import { ArrowLeft, Mail, Lock } from 'lucide-react';
 import '../styles/Auth.css';
 
 const Auth = () => {
@@ -34,7 +34,7 @@ const Auth = () => {
 
             <div className="social-login">
               <button type="button" className="btn-google">
-                <Chrome size={18} /> Entrar com Google
+                Entrar com Google
               </button>
             </div>
           </form>
