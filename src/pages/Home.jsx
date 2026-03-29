@@ -1,3 +1,5 @@
+// ATUALIZAÇÃO TIFFANY - TESTE DE PUSH
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Stethoscope, Activity, Bone, HeartPulse, ShieldCheck, MapPin, Phone, Instagram, MessageCircle } from 'lucide-react';
