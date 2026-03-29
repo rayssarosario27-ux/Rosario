@@ -60,7 +60,7 @@ const Home = () => {
 
       {/* BOTÃO FLUTUANTE WHATSAPP */}
       <a 
-        href="https://wa.me/SEUNUMERO" 
+        href="https://w.app/xq04w9" 
         className="whatsapp-float" 
         target="_blank" 
         rel="noreferrer"
