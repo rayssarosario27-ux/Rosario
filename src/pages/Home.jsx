@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, ShieldCheck, MessageCircle, ChevronRight } from 'lucide-react';
+import { Stethoscope, MessageCircle, ChevronRight } from 'lucide-react';
 import '../styles/Home.css';
 
 const Home = () => {
