@@ -1,4 +1,4 @@
-// ATUALIZAÇÃO TIFFANY - TESTE DE PUSH
+// VERSÃO DEFINITIVA - SEM PASTA ROOT.
 
 import React from 'react';
 import { Link } from 'react-router-dom';
