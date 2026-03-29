@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, MessageCircle, ChevronRight, Bone, Activity, ShieldCheck, HeartPulse } from 'lucide-react';
+import { Stethoscope, Activity, Bone, HeartPulse, ShieldCheck, MapPin, Phone, Instagram } from 'lucide-react';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -9,71 +9,86 @@ const Home = () => {
       <nav className="home-nav">
         <div className="nav-container">
           <div className="home-logo">
-            <div className="logo-icon"><Stethoscope size={24} color="white" /></div>
-            <div className="logo-text">
-              <span className="logo-dr">DR.</span>
-              <span className="logo-name">Eduardo</span>
-            </div>
+            <strong>DR. EDUARDO</strong>
           </div>
           <div className="nav-links">
-            <a href="#clinica">A Clínica</a>
+            <a href="#clinica">Início</a>
             <a href="#especialidades">Especialidades</a>
-            <Link to="/auth" className="btn-portal">Portal do Paciente</Link>
+            <a href="#contato">Contato</a>
+            <Link to="/auth" className="btn-agendar">Portal do Paciente</Link>
           </div>
         </div>
       </nav>
 
-      <main className="home-hero">
-        <div className="hero-grid">
-          <div className="hero-content">
-            <h1 className="hero-headline">
-              Para tudo que <span>você precisar.</span>
-            </h1>
-            <p className="hero-subtext">
-              Cuidado especializado em Ortopedia e Traumatologia. Nossa clínica une tecnologia e humanização para devolver sua mobilidade e qualidade de vida.
-            </p>
-            <button className="btn-main-green">Agendar consulta</button>
-          </div>
-          <div className="hero-image-container">
-            {/* Aqui você pode colocar uma imagem real depois, por enquanto o estilo cuida disso */}
-            <div className="hero-image-placeholder">
-               <img src="https://img.freepik.com/fotos-gratis/sorridente-medico-feminino-com-prancheta-no-hospital_23-2148850739.jpg" alt="Médica" />
+      <section className="home-hero">
+        <div className="hero-content">
+          <h1 className="hero-headline">Para tudo que <br/> você precisar.</h1>
+          <p className="hero-subtext">O cuidado com a saúde é uma preocupação diária e importante. Somos a clínica pensada em ajudar você a atingir o melhor da sua qualidade de vida.</p>
+          <button className="btn-main">Agendar consulta</button>
+        </div>
+        <div className="hero-img">
+          <img src="https://img.freepik.com/fotos-gratis/equipe-medica-trabalhando-junta-no-hospital_23-2148850732.jpg" alt="Equipe Médica" />
+        </div>
+      </section>
+
+      <div className="features-grid">
+        <div className="feature-card">
+          <Activity color="#00ced1" />
+          <h3>Qualidade de vida</h3>
+          <p>Tenha saúde e perspectiva com uma vida longa.</p>
+        </div>
+        <div className="feature-card">
+          <HeartPulse color="#00ced1" />
+          <h3>Exames</h3>
+          <p>Laboratoriais e diagnósticos por imagem no local.</p>
+        </div>
+        <div className="feature-card">
+          <Bone color="#00ced1" />
+          <h3>Ortopedia</h3>
+          <p>Especialista em ossos, articulações e traumatologia.</p>
+        </div>
+        <div className="feature-card">
+          <ShieldCheck color="#00ced1" />
+          <h3>Segurança</h3>
+          <p>Atendimento humanizado e protocolos rígidos.</p>
+        </div>
+      </div>
+
+      <section className="section-especialidades" id="especialidades">
+        <h2>Que tipo de atendimento você está procurando?</h2>
+        <div className="especialidades-grid">
+          <div className="esp-item"><div className="esp-icon"><Bone/></div><span>Ortopedia</span></div>
+          <div className="esp-item"><div className="esp-icon"><Activity/></div><span>Coluna</span></div>
+          <div className="esp-item"><div className="esp-icon"><HeartPulse/></div><span>Fisioterapia</span></div>
+          <div className="esp-item"><div className="esp-icon"><Stethoscope/></div><span>Traumatologia</span></div>
+        </div>
+      </section>
+
+      <footer className="home-footer" id="contato">
+        <div className="footer-grid">
+          <div>
+            <h3>DR. EDUARDO</h3>
+            <p>Sua saúde é nossa prioridade. Atendimento especializado em Rio de Janeiro.</p>
+            <div style={{display:'flex', gap:'10px', marginTop:'15px'}}>
+              <Instagram size={20}/> <Phone size={20}/>
             </div>
           </div>
-        </div>
-
-        {/* CARDS DE SERVIÇOS (IGUAL AO PRINT) */}
-        <div className="services-grid">
-          <div className="service-card">
-            <div className="s-icon blue"><Activity size={24} /></div>
-            <h3>Qualidade de vida</h3>
-            <p>Foco total na sua recuperação e bem-estar diário.</p>
+          <div>
+            <h4>Especialidades</h4>
+            <ul style={{listStyle:'none', padding:0, fontSize:'14px'}}>
+              <li>Ortopedia Geral</li>
+              <li>Cirurgia de Joelho</li>
+              <li>Traumatologia</li>
+            </ul>
           </div>
-          <div className="service-card">
-            <div className="s-icon green"><Bone size={24} /></div>
-            <h3>Ortopedia</h3>
-            <p>Tratamentos especializados em coluna, joelho e ombro.</p>
-          </div>
-          <div className="service-card">
-            <div className="s-icon purple"><ShieldCheck size={24} /></div>
-            <h3>Traumatologia</h3>
-            <p>Atendimento ágil para lesões e fraturas de urgência.</p>
-          </div>
-          <div className="service-card">
-            <div className="s-icon cyan"><HeartPulse size={24} /></div>
-            <h3>Fisioterapia</h3>
-            <p>Reabilitação completa com acompanhamento médico.</p>
+          <div>
+            <h4>Endereço</h4>
+            <p style={{fontSize:'14px'}}><MapPin size={14}/> Av. Principal, 123 - RJ</p>
           </div>
         </div>
-      </main>
-
-      <a href="https://wa.me/seu_numero" className="whatsapp-float" target="_blank" rel="noreferrer">
-        <MessageCircle size={24} />
-        <span>Agendar via WhatsApp</span>
-      </a>
+      </footer>
     </div>
   );
 };
+
 export default Home;
- {/* teste
- */}
