@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Stethoscope, Calendar, FileText, UserSearch, MapPin, 
+  Stethoscope, Calendar, FileText, Search, MapPin, 
   MessageCircle, Accessibility, Eye
 } from 'lucide-react';
 import '../styles/Home.css';
@@ -119,7 +119,7 @@ const Home = () => {
             </div>
 
             <div className="service-card">
-              <UserSearch size={35} />
+              <Search size={35} />
               <span>Corpo Clínico</span>
             </div>
 
