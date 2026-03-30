@@ -1,130 +1,20 @@
-.auth-page {
+.input-row {
   display: flex;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  gap: 15px;
 }
-
-.auth-hero {
+.input-row .input-group {
   flex: 1;
-  background: url('https://i.ibb.co/vzN4z3M/dr-eduardo-foto.jpg') no-repeat center center;
-  background-size: cover;
-  position: relative;
 }
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0, 206, 209, 0.8), rgba(0, 128, 128, 0.6));
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
+.form-box.scrollable {
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
-
-.back-link {
-  position: absolute;
-  top: 40px;
-  background: none;
-  border: none;
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-weight: 500;
+/* Scrollbar bonitinha */
+.form-box.scrollable::-webkit-scrollbar {
+  width: 5px;
 }
-
-.auth-form-container {
-  width: 450px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  padding: 40px;
-}
-
-.form-box {
-  width: 100%;
-  max-width: 350px;
-}
-
-.form-box h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.form-subtitle {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #444;
-}
-
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-icon {
-  position: absolute;
-  left: 12px;
-  color: #999;
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  transition: 0.3s;
-}
-
-.input-wrapper input:focus {
-  border-color: #00ced1;
-  box-shadow: 0 0 0 2px rgba(0, 206, 209, 0.1);
-}
-
-.btn-auth-submit {
-  width: 100%;
-  padding: 14px;
+.form-box.scrollable::-webkit-scrollbar-thumb {
   background: #00ced1;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
-}
-
-.btn-auth-submit:hover {
-  background: #00a8a8;
-}
-
-.auth-toggle {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.auth-toggle button {
-  background: none;
-  border: none;
-  color: #00ced1;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: underline;
+  border-radius: 10px;
 }
