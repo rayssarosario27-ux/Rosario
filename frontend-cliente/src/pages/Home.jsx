@@ -61,9 +61,9 @@ const Home = () => {
             <button className="btn-main-orange" onClick={() => navigate('/auth?mode=register')}>Agendar Agora</button>
           </div>
           <div className="hero-image">
-            {/* Usando require direto para forçar o Webpack a achar a imagem */}
+            {/* Agora buscando direto da pasta public */}
             <img 
-              src={require('../assets/dr-eduardo.jpg')} 
+              src="/dr-eduardo.jpg" 
               alt="Dr. Eduardo" 
               onError={(e) => e.target.style.display='none'}
             />
