@@ -4,6 +4,8 @@ import {
   Stethoscope, Calendar, FileText, Search, MapPin, 
   MessageCircle, Accessibility, Eye
 } from 'lucide-react';
+// Importando a foto da pasta assets
+import drEduardoFoto from '../assets/dr-eduardo.jpg';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -97,7 +99,7 @@ const Home = () => {
 
           <div className="hero-image">
             <img 
-              src="https://i.ibb.co/vzN4z3M/dr-eduardo-foto.jpg" 
+              src={drEduardoFoto} 
               alt="Dr. Eduardo"
             />
           </div>
