@@ -1,20 +1,94 @@
+.auth-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #fff;
+}
+
+.auth-hero {
+  flex: 1.2;
+  background: url('https://i.ibb.co/vzN4z3M/dr-eduardo-foto.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.hero-overlay {
+  height: 100%;
+  background: rgba(0, 128, 128, 0.75);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
+.auth-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: white;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.scrollable {
+  max-height: 95vh;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-top: 5px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #00ced1;
+}
+
+input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.checkbox-group {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.btn-auth-submit {
+  width: 100%;
+  padding: 15px;
+  background: #00ced1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-auth-submit.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
 .input-row {
   display: flex;
-  gap: 15px;
-}
-.input-row .input-group {
-  flex: 1;
-}
-.form-box.scrollable {
-  max-height: 90vh;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-/* Scrollbar bonitinha */
-.form-box.scrollable::-webkit-scrollbar {
-  width: 5px;
-}
-.form-box.scrollable::-webkit-scrollbar-thumb {
-  background: #00ced1;
-  border-radius: 10px;
+  gap: 10px;
 }

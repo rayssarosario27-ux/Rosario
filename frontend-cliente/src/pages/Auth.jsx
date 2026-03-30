@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowLeft, CreditCard, Phone, Smartphone, Hash } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, CreditCard, Phone, Smartphone, Hash, CheckCircle } from 'lucide-react';
 import '../styles/Auth.css';
 
-export default function Auth({ setToken, setPaciente }) {
+export default function Auth() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   
-  // Estado para controlar se mostra a carteirinha
-  const [convenio, setConvenio] = useState('');
+  // Estados do formulário
+  const [formData, setFormData] = useState({
+    nome: '', cpf: '', convenio: '', carteirinha: '', celular: '', telefone: '', email: '', senha: ''
+  });
+  const [semConvenio, setSemConvenio] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setIsLogin(params.get('mode') !== 'register');
   }, [location]);
+
+  // Validação para liberar o botão
+  const isFormValid = () => {
+    if (isLogin) return formData.email && formData.senha;
+    
+    const fieldsRequired = formData.nome && formData.cpf && formData.celular && formData.email && formData.senha;
+    const convenioValid = semConvenio || (formData.convenio && formData.carteirinha);
+    
+    return fieldsRequired && convenioValid;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="auth-page">
@@ -39,7 +56,7 @@ export default function Auth({ setToken, setPaciente }) {
                   <label>Nome Completo</label>
                   <div className="input-wrapper">
                     <User className="input-icon" size={20} />
-                    <input type="text" placeholder="Nome completo" required />
+                    <input name="nome" onChange={handleChange} type="text" placeholder="Nome completo" />
                   </div>
                 </div>
 
@@ -47,29 +64,39 @@ export default function Auth({ setToken, setPaciente }) {
                   <label>CPF</label>
                   <div className="input-wrapper">
                     <Hash className="input-icon" size={20} />
-                    <input type="text" placeholder="000.000.000-00" required />
+                    <input name="cpf" onChange={handleChange} type="text" placeholder="000.000.000-00" />
                   </div>
                 </div>
 
                 <div className="input-group">
-                  <label>Convênio (Opcional)</label>
+                  <label>Convênio</label>
                   <div className="input-wrapper">
                     <CreditCard className="input-icon" size={20} />
                     <input 
+                      name="convenio" 
+                      disabled={semConvenio}
+                      onChange={handleChange}
                       type="text" 
-                      placeholder="Ex: Unimed" 
-                      value={convenio}
-                      onChange={(e) => setConvenio(e.target.value)}
+                      placeholder={semConvenio ? "Particular" : "Ex: Unimed"} 
                     />
+                  </div>
+                  <div className="checkbox-group">
+                    <input 
+                      type="checkbox" 
+                      id="no-conv" 
+                      checked={semConvenio} 
+                      onChange={() => setSemConvenio(!semConvenio)} 
+                    />
+                    <label htmlFor="no-conv">Não tenho convênio</label>
                   </div>
                 </div>
 
-                {convenio && (
+                {formData.convenio && !semConvenio && (
                   <div className="input-group animated">
                     <label>Número da Carteirinha</label>
                     <div className="input-wrapper">
                       <Hash className="input-icon" size={20} />
-                      <input type="text" placeholder="Número da carteirinha" required />
+                      <input name="carteirinha" onChange={handleChange} type="text" placeholder="Número da carteirinha" />
                     </div>
                   </div>
                 )}
@@ -79,14 +106,14 @@ export default function Auth({ setToken, setPaciente }) {
                     <label>Celular</label>
                     <div className="input-wrapper">
                       <Smartphone className="input-icon" size={20} />
-                      <input type="text" placeholder="(21) 9..." required />
+                      <input name="celular" onChange={handleChange} type="text" placeholder="(21) 9..." />
                     </div>
                   </div>
                   <div className="input-group">
                     <label>Telefone</label>
                     <div className="input-wrapper">
                       <Phone className="input-icon" size={20} />
-                      <input type="text" placeholder="(21) ..." />
+                      <input name="telefone" onChange={handleChange} type="text" placeholder="(21) ..." />
                     </div>
                   </div>
                 </div>
@@ -97,19 +124,23 @@ export default function Auth({ setToken, setPaciente }) {
               <label>E-mail</label>
               <div className="input-wrapper">
                 <Mail className="input-icon" size={20} />
-                <input type="email" placeholder="seu@email.com" required />
+                <input name="email" onChange={handleChange} type="email" placeholder="seu@email.com" />
               </div>
             </div>
 
             <div className="input-group">
-              <label>{isLogin ? 'Senha' : 'Criar Senha'}</label>
+              <label>Senha</label>
               <div className="input-wrapper">
                 <Lock className="input-icon" size={20} />
-                <input type="password" placeholder="********" required />
+                <input name="senha" onChange={handleChange} type="password" placeholder="********" />
               </div>
             </div>
 
-            <button type="submit" className="btn-auth-submit">
+            <button 
+              type="submit" 
+              className={`btn-auth-submit ${!isFormValid() ? 'disabled' : ''}`}
+              disabled={!isFormValid()}
+            >
               {isLogin ? 'Entrar' : 'Cadastrar'}
             </button>
           </form>
