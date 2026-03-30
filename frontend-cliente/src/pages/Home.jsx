@@ -4,7 +4,6 @@ import {
   Stethoscope, Calendar, FileText, Search, MapPin, 
   MessageCircle, Accessibility, Eye
 } from 'lucide-react';
-import drEduardoFoto from '../assets/dr-eduardo.jpg';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -62,7 +61,12 @@ const Home = () => {
             <button className="btn-main-orange" onClick={() => navigate('/auth?mode=register')}>Agendar Agora</button>
           </div>
           <div className="hero-image">
-            <img src={drEduardoFoto} alt="Dr. Eduardo" />
+            {/* Usando require direto para forçar o Webpack a achar a imagem */}
+            <img 
+              src={require('../assets/dr-eduardo.jpg')} 
+              alt="Dr. Eduardo" 
+              onError={(e) => e.target.style.display='none'}
+            />
           </div>
         </section>
 
