@@ -1,70 +1,82 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Mail, Lock, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import '../styles/Auth.css';
 
-const Auth = () => {
+export default function Auth({ setToken, setPaciente }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Define se começa em Login ou Cadastro baseado na URL
   const [isLogin, setIsLogin] = useState(true);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    setIsLogin(params.get('mode') !== 'register');
+  }, [location]);
 
   return (
     <div className="auth-page">
-      
-      {/* Lado Esquerdo */}
-      <div 
-        className="auth-side-image" 
-        style={{ 
-          backgroundImage: `linear-gradient(rgba(0, 206, 209, 0.3), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/8376295/pexels-photo-8376295.jpeg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <Link to="/" className="back-link">
-          <ArrowLeft size={20} /> Voltar
-        </Link>
-
-        <h1>{isLogin ? "Acesso à saúde de qualidade." : "Crie sua conta agora."}</h1>
-        <p>Portal exclusivo para pacientes da Clínica Dr. Eduardo.</p>
-      </div>
-
-      {/* Lado Direito */}
-      <div className="auth-side-form">
-        <div className="auth-form-container">
-
-          <h2>{isLogin ? "Entrar" : "Cadastrar"}</h2>
-
-          <form>
-            
-            {!isLogin && (
-              <div className="input-box">
-                <label><User size={14}/> Nome</label>
-                <input type="text" placeholder="Seu nome" />
-              </div>
-            )}
-
-            <div className="input-box">
-              <label><Mail size={14}/> Email</label>
-              <input type="email" placeholder="seu@email.com" />
-            </div>
-
-            <div className="input-box">
-              <label><Lock size={14}/> Senha</label>
-              <input type="password" placeholder="********" />
-            </div>
-
-            <button className="auth-btn">
-              {isLogin ? "Entrar" : "Cadastrar"}
-            </button>
-          </form>
-
-          <p onClick={() => setIsLogin(!isLogin)} className="switch-mode">
-            {isLogin ? "Não tem conta? Cadastre-se" : "Já tem conta? Entrar"}
-          </p>
-
+      {/* Lado Esquerdo - Imagem e Boas-vindas */}
+      <div className="auth-hero">
+        <div className="hero-overlay">
+          <button onClick={() => navigate('/')} className="back-link">
+            <ArrowLeft size={18} /> Voltar
+          </button>
+          <h1>Acesso à saúde de qualidade.</h1>
+          <p>Portal exclusivo para pacientes da Clínica Dr. Eduardo.</p>
         </div>
       </div>
 
+      {/* Lado Direito - Formulário */}
+      <div className="auth-form-container">
+        <div className="form-box">
+          <h2>{isLogin ? 'Entrar' : 'Criar Conta'}</h2>
+          <p className="form-subtitle">
+            {isLogin ? 'Bem-vindo de volta! Digite seus dados.' : 'Preencha os dados para começar seu cuidado.'}
+          </p>
+
+          <form onSubmit={(e) => e.preventDefault()}>
+            {!isLogin && (
+              <div className="input-group">
+                <label>Nome Completo</label>
+                <div className="input-wrapper">
+                  <User className="input-icon" size={20} />
+                  <input type="text" placeholder="Seu nome" />
+                </div>
+              </div>
+            )}
+
+            <div className="input-group">
+              <label>E-mail</label>
+              <div className="input-wrapper">
+                <Mail className="input-icon" size={20} />
+                <input type="email" placeholder="seu@email.com" />
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label>Senha</label>
+              <div className="input-wrapper">
+                <Lock className="input-icon" size={20} />
+                <input type="password" placeholder="********" />
+              </div>
+            </div>
+
+            <button type="submit" className="btn-auth-submit">
+              {isLogin ? 'Entrar' : 'Cadastrar'}
+            </button>
+          </form>
+
+          <div className="auth-toggle">
+            {isLogin ? (
+              <p>Não tem conta? <button onClick={() => navigate('/auth?mode=register')}>Cadastre-se</button></p>
+            ) : (
+              <p>Já tem conta? <button onClick={() => navigate('/auth')}>Faça Login</button></p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Auth;
+}

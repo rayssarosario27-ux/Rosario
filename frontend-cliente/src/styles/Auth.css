@@ -1,155 +1,130 @@
 .auth-page {
-  min-height: 100vh;
   display: flex;
-  background-color: #f8fafc;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-/* LADO ESQUERDO: IMAGEM */
-.auth-side-image {
-  flex: 1.2;
-  position: relative;
-  background: linear-gradient(rgba(0, 206, 209, 0.8), rgba(0, 174, 176, 0.9)), 
-              url('https://img.freepik.com/fotos-gratis/medicos-discutindo-sobre-um-laptop_23-2148850755.jpg');
+.auth-hero {
+  flex: 1;
+  background: url('https://i.ibb.co/vzN4z3M/dr-eduardo-foto.jpg') no-repeat center center;
   background-size: cover;
-  background-position: center;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 206, 209, 0.8), rgba(0, 128, 128, 0.6));
+  padding: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px;
   color: white;
 }
 
-.auth-side-image h1 {
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-
-.auth-side-image p {
-  font-size: 18px;
-  opacity: 0.9;
-}
-
-/* LADO DIREITO: FORMULÁRIO */
-.auth-side-form {
-  flex: 1;
+.back-link {
+  position: absolute;
+  top: 40px;
+  background: none;
+  border: none;
+  color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 40px;
-  background: white;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 .auth-form-container {
-  width: 100%;
-  max-width: 400px;
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 40px;
 }
 
-.auth-form-container h2 {
-  font-size: 28px;
-  color: #1e293b;
+.form-box {
+  width: 100%;
+  max-width: 350px;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  color: #333;
   margin-bottom: 8px;
 }
 
-.auth-form-container p {
-  color: #64748b;
+.form-subtitle {
+  color: #666;
   margin-bottom: 30px;
 }
 
-.input-box {
+.input-group {
   margin-bottom: 20px;
-  position: relative;
 }
 
-.input-box label {
+.input-group label {
   display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
   margin-bottom: 8px;
+  font-weight: 500;
+  color: #444;
 }
 
-.input-box input {
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #999;
+}
+
+.input-wrapper input {
   width: 100%;
-  padding: 14px 15px;
-  border: 1px solid #e2e8f0;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 15px;
   outline: none;
   transition: 0.3s;
 }
 
-.input-box input:focus {
+.input-wrapper input:focus {
   border-color: #00ced1;
-  box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 206, 209, 0.1);
 }
 
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  font-size: 14px;
-}
-
-.btn-signin {
+.btn-auth-submit {
   width: 100%;
-  background: #002d72; /* Azul Marinho Profissional */
+  padding: 14px;
+  background: #00ced1;
   color: white;
-  padding: 16px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
   transition: 0.3s;
 }
 
-.btn-signin:hover { background: #001e4d; }
-
-.social-login {
-  margin-top: 30px;
-  text-align: center;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
+.btn-auth-submit:hover {
+  background: #00a8a8;
 }
 
-.btn-google {
-  width: 100%;
-  background: white;
-  border: 1px solid #e2e8f0;
-  padding: 12px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* RESPONSIVO */
-@media (max-width: 900px) {
-  .auth-side-image { display: none; }
-}
-.auth-switch {
+.auth-toggle {
   margin-top: 20px;
   text-align: center;
-  font-size: 14px;
-  color: #666;
 }
 
-.btn-switch {
+.auth-toggle button {
   background: none;
   border: none;
-  color: #6366f1; /* Cor azulada do seu tema */
+  color: #00ced1;
   font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
-  padding: 0 5px;
-}
-
-.btn-switch:hover {
-  color: #4f46e5;
 }
