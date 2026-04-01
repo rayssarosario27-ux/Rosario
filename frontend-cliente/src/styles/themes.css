@@ -1,22 +1,23 @@
 :root {
-  /* Cores Pastéis - Dr. Eduardo */
-  --primary: #a8e6cf;
-  --primary-dark: #56ab91;
-  --secondary: #dcedc1;
-  --accent: #ffd3b6;
-  --light: #ffaaa5;
-  --background: #f8f9fa;
+  /* Verde Água — Clínica Dr. Eduardo */
+  --primary: #00c9b1;
+  --primary-dark: #00a896;
+  --primary-deeper: #007a8a;
+  --primary-darkest: #005f6b;
+  --secondary: #00e5cc;
+  --background: #f0fffe;
   --surface: #ffffff;
-  --text: #2d5f4f;
-  --text-secondary: #666;
-  --border: #e0e0e0;
-  
-  --gradient-primary: linear-gradient(135deg, #a8e6cf 0%, #56ab91 100%);
-  --gradient-secondary: linear-gradient(135deg, #dcedc1 0%, #a8e6cf 100%);
-  
-  --shadow-sm: 0 2px 8px rgba(168, 230, 207, 0.15);
-  --shadow-md: 0 8px 24px rgba(168, 230, 207, 0.2);
-  --shadow-lg: 0 16px 48px rgba(168, 230, 207, 0.25);
+  --text: #0d3b3e;
+  --text-secondary: #4a7c80;
+  --border: #c8f0eb;
+
+  --gradient-primary: linear-gradient(135deg, #00c9b1 0%, #00a896 55%, #007a8a 100%);
+  --gradient-secondary: linear-gradient(135deg, #00e5cc 0%, #00c9b1 100%);
+  --gradient-dark: linear-gradient(135deg, #005f6b 0%, #004d5a 100%);
+
+  --shadow-sm: 0 2px 8px rgba(0, 122, 138, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 122, 138, 0.12);
+  --shadow-lg: 0 16px 48px rgba(0, 122, 138, 0.18);
 }
 
 * {
@@ -26,7 +27,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
   background: var(--background);
   color: var(--text);
   line-height: 1.6;
@@ -37,24 +38,17 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: #f0fffe;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: #b2ede7;
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-* {
-  transition: color 0.3s ease, background 0.3s ease;
+  background: var(--primary);
 }
 
 button, a {
@@ -66,15 +60,15 @@ button, a {
 input, textarea, select {
   font-family: inherit;
   font-size: inherit;
-  border: 2px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   padding: 12px;
   background: var(--surface);
   color: var(--text);
+  outline: none;
 }
 
 input:focus, textarea:focus {
-  outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(168, 230, 207, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 201, 177, 0.12);
 }

@@ -1,54 +1,931 @@
-/* --- Reset e Layout --- */
-.home-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
-.home-nav { background-color: #00ced1; color: #fff; padding: 15px 0; width: 100%; }
-.nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-.home-logo { display: flex; align-items: center; gap: 12px; }
-.logo-icon-bg { background: rgba(255,255,255,0.3); padding: 8px; border-radius: 8px; display: flex; }
-.logo-text-box { display: flex; flex-direction: column; }
-.dr-name { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
-.dr-sub { font-size: 10px; letter-spacing: 2px; opacity: 0.85; }
-.nav-actions { display: flex; gap: 10px; }
-.btn-nav-outline { border: 1px solid #fff; color: #fff; text-decoration: none; padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+/* ==============================================
+   HOME PAGE — VERDE ÁGUA GRADIENT DESIGN
+   Clínica Dr. Eduardo
+   ============================================== */
 
-/* --- BANNER ZAYA --- */
-.zaya-banner-section { width: 100%; overflow: hidden; background-color: #0b2239; }
-.zaya-banner-container { position: relative; width: 100%; max-width: 1920px; margin: 0 auto; }
-.zaya-full-img { width: 100%; height: auto; display: block; }
+/* === RESET / BASE === */
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  background: #fff;
+  color: #0d3b3e;
+}
 
-/* POSICIONAMENTO DO BOTÃO EM CIMA DO LARANJA DA FOTO */
+/* === BARRA DE ACESSIBILIDADE === */
+.accessibility-bar {
+  background: #005f6b;
+  padding: 5px 0;
+}
+.acc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+.acc-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.acc-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* === NAVBAR === */
+.home-nav {
+  background: linear-gradient(135deg, #00c9b1 0%, #00a896 55%, #007a8a 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 20px rgba(0, 150, 136, 0.4);
+}
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+}
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon-bg {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 9px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+.logo-text-box {
+  display: flex;
+  flex-direction: column;
+}
+.dr-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+.dr-sub {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.nav-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.btn-nav-ghost {
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 22px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  background: transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.btn-nav-ghost:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+}
+.btn-nav-solid {
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 9px 24px;
+  border-radius: 8px;
+  background: #fff;
+  color: #00a896;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+}
+.btn-nav-solid:hover {
+  background: #f0fffe;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* === BANNER ZAYA === */
+.zaya-banner-section {
+  width: 100%;
+  overflow: hidden;
+  background: #005f6b;
+  position: relative;
+}
+.zaya-banner-container {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+.zaya-full-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 .btn-zaya-overlay {
   position: absolute;
-  top: 61%; /* Ajuste aqui se o botão subir/descer */
-  left: 6.5%; /* Ajuste aqui se o botão for para os lados */
-  width: 13%; /* Largura proporcional ao botão da foto */
-  height: 6%; /* Altura proporcional */
-
-  background-color: transparent; /* Fica invisível para usar o da foto */
-  color: transparent; /* Esconde o texto */
+  top: 61%;
+  left: 6.5%;
+  width: 13%;
+  height: 6%;
+  background: transparent;
+  color: transparent;
   border: none;
   cursor: pointer;
   z-index: 10;
 }
 
-/* Se quiser que o botão apareça (caso a foto corte), use:
-   background-color: #ff7f00; color: #fff;
-*/
+/* === HERO === */
+.home-hero {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+.hero-content {
+  flex: 1;
+  max-width: 560px;
+}
+.hero-tag {
+  display: inline-block;
+  background: #e0faf7;
+  color: #007a8a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #b2ede7;
+}
+.hero-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2.9rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #0d3b3e;
+  margin: 0 0 20px;
+}
+.hero-title span {
+  color: #00c9b1;
+}
+.hero-desc {
+  font-size: 16px;
+  color: #4a7c80;
+  line-height: 1.75;
+  margin: 0 0 36px;
+}
+.hero-cta-group {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.btn-primary-cta {
+  background: linear-gradient(135deg, #00c9b1 0%, #00a896 100%);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 34px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 5px 18px rgba(0, 168, 150, 0.4);
+  letter-spacing: 0.2px;
+}
+.btn-primary-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 168, 150, 0.5);
+}
+.btn-secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  color: #007a8a;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 26px;
+  border: 2px solid #007a8a;
+  border-radius: 10px;
+  transition: all 0.25s;
+}
+.btn-secondary-cta:hover {
+  background: #007a8a;
+  color: #fff;
+}
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.hero-image img {
+  max-width: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 122, 138, 0.15);
+}
 
-/* FOOTER */
-.home-footer { background: #f8fafc; padding: 40px 20px; border-top: 1px solid #e2e8f0; margin-top: auto; }
-.footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #008b8b; }
-.footer-contact { display: flex; gap: 8px; font-weight: 400; color: #555; }
+/* === SERVIÇOS === */
+.services-section {
+  background: linear-gradient(180deg, #f0fffe 0%, #e6f9f7 100%);
+  padding: 80px 24px;
+}
+.services-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-header.centered {
+  text-align: center;
+}
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #00c9b1;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0d3b3e;
+  display: block;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #00c9b1, #00e5cc);
+  border-radius: 2px;
+  margin: 14px auto 0;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.service-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(0, 122, 138, 0.08);
+  border: 1px solid #d0f0ec;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+.service-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #e0faf7 0%, #c8f5ee 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00c9b1;
+  transition: all 0.3s;
+}
+.service-card span {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0d3b3e;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 168, 150, 0.18);
+  border-color: #00c9b1;
+}
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, #00c9b1 0%, #00a896 100%);
+  color: #fff;
+}
 
-.whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 2000; animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+/* === ASSISTENTE 24HRS === */
+.dora-section {
+  background: linear-gradient(135deg, #00c9b1 0%, #009688 50%, #007a8a 100%);
+  padding: 80px 24px;
+  text-align: center;
+}
+.dora-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.dora-container h3 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.dora-container p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+.btn-dora {
+  background: #fff;
+  color: #00a896;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 15px 44px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+.btn-dora:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
 
-/* RESPONSIVIDADE */
+/* === ENCONTRE UMA CLÍNICA === */
+.clinica-section {
+  background: #fff;
+  padding: 80px 24px;
+}
+.clinica-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.clinica-desc {
+  font-size: 15px;
+  color: #4a7c80;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* Caixa de busca */
+.clinica-search-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 36px 0 40px;
+  background: #f0fffe;
+  border: 1.5px solid #b2ede7;
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+.clinica-input-wrap {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-pin-icon {
+  position: absolute;
+  left: 14px;
+  color: #00c9b1;
+  pointer-events: none;
+}
+.clinica-input {
+  width: 100%;
+  padding: 11px 14px 11px 42px;
+  border: 1.5px solid #c8f0eb;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  color: #0d3b3e;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.clinica-input:focus {
+  border-color: #00c9b1;
+  box-shadow: 0 0 0 3px rgba(0, 201, 177, 0.12);
+}
+.clinica-input::placeholder {
+  color: #a0c4c0;
+}
+.btn-buscar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(0, 168, 150, 0.3);
+}
+.btn-buscar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 168, 150, 0.4);
+}
+.btn-localizar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  color: #007a8a;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 20px;
+  border: 1.5px solid #007a8a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.btn-localizar:hover {
+  background: #007a8a;
+  color: #fff;
+}
+.btn-localizar:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Layout mapa + card */
+.clinica-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+.clinica-map {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 122, 138, 0.12);
+  border: 1.5px solid #d0f0ec;
+  height: 380px;
+}
+.clinica-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Card da unidade */
+.clinica-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.clinica-card {
+  background: #fff;
+  border: 1.5px solid #d0f0ec;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 4px 16px rgba(0, 122, 138, 0.08);
+  transition: all 0.3s;
+}
+.clinica-card.active {
+  border-color: #00c9b1;
+  box-shadow: 0 6px 24px rgba(0, 168, 150, 0.15);
+}
+.clinica-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.clinica-card-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.clinica-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0d3b3e;
+  margin-bottom: 5px;
+}
+.clinica-tag-badge {
+  display: inline-block;
+  background: #e0faf7;
+  color: #007a8a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+.clinica-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.clinica-info p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #4a7c80;
+  font-weight: 600;
+  margin: 0;
+}
+.clinica-info svg {
+  color: #00c9b1;
+  flex-shrink: 0;
+}
+.clinica-card-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-ver-mapa {
+  flex: 1;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border: 1.5px solid #00c9b1;
+  border-radius: 8px;
+  color: #00c9b1;
+  transition: all 0.2s;
+}
+.btn-ver-mapa:hover {
+  background: #00c9b1;
+  color: #fff;
+}
+.btn-agendar-clinica {
+  flex: 1;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.btn-agendar-clinica:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 168, 150, 0.35);
+}
+
+/* === FOOTER === */
+.home-footer {
+  background: linear-gradient(135deg, #005f6b 0%, #004d5a 100%);
+  padding: 40px 24px;
+}
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.footer-container strong {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.footer-tagline {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.footer-contact {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.footer-contact span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* === WHATSAPP FLUTUANTE === */
+.whatsapp-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #25d366;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  z-index: 2000;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
+}
+
+/* ==============================================
+   RESPONSIVIDADE
+   ============================================== */
+
+/* Tablet grande (1024px) */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .clinica-layout {
+    grid-template-columns: 1fr;
+  }
+  .clinica-map {
+    height: 300px;
+  }
+  .home-hero {
+    gap: 40px;
+    padding: 60px 24px;
+  }
+  .hero-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* Tablet (768px) */
 @media (max-width: 768px) {
-  .home-hero { flex-direction: column; text-align: center; padding: 40px 20px; }
-  .hero-image { order: -1; justify-content: center; }
-  .hero-title { font-size: 2.5rem; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-container { flex-direction: column; gap: 20px; }
-  .nav-actions { gap: 6px; }
-  .btn-nav-outline { padding: 6px 12px; font-size: 12px; }
+  /* Navbar */
+  .nav-container {
+    height: 60px;
+    padding: 0 16px;
+  }
+  .dr-name {
+    font-size: 13px;
+  }
+  .btn-nav-ghost {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+  .btn-nav-solid {
+    padding: 7px 16px;
+    font-size: 12px;
+  }
+
+  /* Hero */
+  .home-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 48px 20px;
+    gap: 36px;
+  }
+  .hero-content {
+    max-width: 100%;
+  }
+  .hero-image {
+    order: -1;
+    width: 100%;
+  }
+  .hero-image img {
+    max-height: 320px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-cta-group {
+    justify-content: center;
+  }
+  .btn-primary-cta,
+  .btn-secondary-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Serviços */
+  .services-section {
+    padding: 60px 20px;
+  }
+  .section-title {
+    font-size: 1.65rem;
+  }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .service-card {
+    padding: 24px 16px;
+  }
+
+  /* Dora */
+  .dora-section {
+    padding: 60px 20px;
+  }
+  .dora-container h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Clínica */
+  .clinica-section {
+    padding: 60px 20px;
+  }
+  .clinica-search-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .clinica-input-wrap {
+    min-width: unset;
+    width: 100%;
+  }
+  .btn-buscar,
+  .btn-localizar {
+    width: 100%;
+    justify-content: center;
+  }
+  .clinica-map {
+    height: 260px;
+  }
+
+  /* Footer */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  .footer-contact {
+    justify-content: center;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  /* Navbar — esconde subtítulo */
+  .dr-sub {
+    display: none;
+  }
+  .logo-icon-bg {
+    padding: 7px;
+  }
+  .dr-name {
+    font-size: 12px;
+  }
+  .btn-nav-ghost {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  .btn-nav-solid {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  .hero-desc {
+    font-size: 14px;
+  }
+  .hero-image img {
+    max-height: 240px;
+  }
+  .btn-primary-cta {
+    font-size: 14px;
+    padding: 13px 28px;
+  }
+  .btn-secondary-cta {
+    font-size: 13px;
+    padding: 12px 20px;
+  }
+
+  /* Serviços */
+  .services-section {
+    padding: 48px 16px;
+  }
+  .section-title {
+    font-size: 1.45rem;
+  }
+  .service-card {
+    padding: 20px 12px;
+    gap: 10px;
+  }
+  .service-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Dora */
+  .dora-section {
+    padding: 48px 16px;
+  }
+  .dora-container h3 {
+    font-size: 1.2rem;
+  }
+  .dora-container p {
+    font-size: 14px;
+  }
+  .btn-dora {
+    padding: 13px 32px;
+    font-size: 14px;
+  }
+
+  /* Clínica */
+  .clinica-section {
+    padding: 48px 16px;
+  }
+  .clinica-map {
+    height: 220px;
+  }
+  .clinica-card-btns {
+    flex-direction: column;
+  }
+  .btn-ver-mapa,
+  .btn-agendar-clinica {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* WhatsApp */
+  .whatsapp-float {
+    width: 52px;
+    height: 52px;
+    bottom: 20px;
+    right: 16px;
+  }
 }
