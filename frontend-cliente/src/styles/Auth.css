@@ -228,6 +228,237 @@
   font-weight: 700;
 }
 
+/* Toggle mostrar senha */
+.toggle-senha {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+  color: #4a7c80;
+}
+
+/* Regras de senha */
+.senha-rules {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.senha-rules li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.senha-rules li.ok {
+  color: #00a896;
+}
+
+.senha-rules li.fail {
+  color: #e05252;
+}
+
+/* ─── Biometric Step ────────────────────────────────── */
+.auth-page-bio {
+  background: linear-gradient(135deg, #f0fffe 0%, #e0faf7 100%);
+  justify-content: center;
+  align-items: center;
+}
+
+.bio-step {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 122, 138, 0.15);
+  text-align: center;
+  margin: 40px 16px;
+}
+
+.bio-header {
+  margin-bottom: 32px;
+}
+
+.bio-icon {
+  color: #00c9b1;
+  margin-bottom: 12px;
+}
+
+.bio-header h2 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0d3b3e;
+  margin-bottom: 10px;
+}
+
+.bio-header p {
+  font-size: 14px;
+  color: #4a7c80;
+  line-height: 1.6;
+}
+
+.bio-camera-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.bio-video-frame {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #00c9b1;
+  box-shadow: 0 0 0 8px rgba(0, 201, 177, 0.12);
+}
+
+.bio-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.bio-face-guide {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0, 201, 177, 0.6);
+  pointer-events: none;
+}
+
+.bio-hint {
+  font-size: 13px;
+  color: #4a7c80;
+  font-weight: 600;
+  max-width: 280px;
+}
+
+.btn-bio-capture {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 5px 18px rgba(0, 168, 150, 0.4);
+}
+
+.btn-bio-capture:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 168, 150, 0.5);
+}
+
+.bio-captured-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.bio-preview {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00c9b1;
+  box-shadow: 0 8px 24px rgba(0, 168, 150, 0.25);
+  transform: scaleX(-1);
+}
+
+.bio-success-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #e0faf7;
+  color: #007a8a;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #b2ede7;
+}
+
+.bio-confirm-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-bio-retry {
+  padding: 12px 28px;
+  border: 2px solid #007a8a;
+  background: transparent;
+  color: #007a8a;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-bio-retry:hover {
+  background: #007a8a;
+  color: #fff;
+}
+
+.btn-bio-confirm {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(0, 168, 150, 0.4);
+}
+
+.btn-bio-confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 168, 150, 0.5);
+}
+
+.bio-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #e05252;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.bio-error svg {
+  flex-shrink: 0;
+}
+
 /* Mobile — stack vertically */
 @media (max-width: 768px) {
   .auth-page {

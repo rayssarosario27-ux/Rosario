@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Mail, Lock, User, ArrowLeft, CreditCard, Phone,
-  Smartphone, Hash, MapPin, Globe, Calendar
+  Smartphone, Hash, MapPin, Globe, Calendar,
+  CheckCircle, XCircle, Camera, Scan
 } from 'lucide-react';
 import '../styles/Auth.css';
 
+/* ─── CPF ─────────────────────────────────────────── */
 function validarCPF(cpf) {
   const nums = cpf.replace(/\D/g, '');
   if (nums.length !== 11 || /^(\d)\1+$/.test(nums)) return false;
@@ -29,12 +31,133 @@ function formatarCPF(valor) {
     .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 }
 
+/* ─── Email ───────────────────────────────────────── */
+function validarEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+/* ─── Senha ───────────────────────────────────────── */
+function checarSenha(senha) {
+  return {
+    minLen: senha.length >= 8,
+    special: /[!@#$%^&*()_=+{}[\];':"\\|,.<>/?`~-]/.test(senha),
+    noRepeat: !/(.)\1{2,}/.test(senha),
+  };
+}
+
+/* ─── Biometric Step ─────────────────────────────── */
+function BiometricStep({ nome, onComplete }) {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [stream, setStream] = useState(null);
+  const [captured, setCaptured] = useState(false);
+  const [camError, setCamError] = useState('');
+  const [imgData, setImgData] = useState(null);
+
+  useEffect(() => {
+    startCamera();
+    return () => stopCamera();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const startCamera = async () => {
+    try {
+      const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+      setStream(s);
+      if (videoRef.current) videoRef.current.srcObject = s;
+    } catch {
+      setCamError('Não foi possível acessar a câmera. Verifique as permissões do navegador.');
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+  };
+
+  const capturar = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0);
+    const data = canvas.toDataURL('image/jpeg', 0.8);
+    setImgData(data);
+    setCaptured(true);
+    stopCamera();
+  };
+
+  const confirmar = () => {
+    localStorage.setItem('biometria', 'active');
+    onComplete();
+  };
+
+  const recapturar = () => {
+    setCaptured(false);
+    setImgData(null);
+    startCamera();
+  };
+
+  return (
+    <div className="bio-step">
+      <div className="bio-header">
+        <Scan size={32} className="bio-icon" />
+        <h2>Cadastro de Biometria Facial</h2>
+        <p>
+          Olá, <strong>{nome || 'Paciente'}</strong>! Precisamos registrar seu rosto para que você
+          possa acessar a clínica pela catraca de reconhecimento facial.
+        </p>
+      </div>
+
+      {camError ? (
+        <div className="bio-error">
+          <XCircle size={24} />
+          <span>{camError}</span>
+          <button className="btn-auth-submit" onClick={onComplete} style={{ marginTop: 16 }}>
+            Pular por enquanto
+          </button>
+        </div>
+      ) : !captured ? (
+        <div className="bio-camera-area">
+          <div className="bio-video-frame">
+            <video ref={videoRef} autoPlay playsInline muted className="bio-video" />
+            <div className="bio-face-guide" />
+          </div>
+          <p className="bio-hint">Posicione seu rosto dentro do círculo e clique em capturar.</p>
+          <button className="btn-bio-capture" onClick={capturar}>
+            <Camera size={20} /> Capturar Rosto
+          </button>
+        </div>
+      ) : (
+        <div className="bio-captured-area">
+          <img src={imgData} alt="Foto capturada" className="bio-preview" />
+          <div className="bio-success-badge">
+            <CheckCircle size={20} /> Foto capturada com sucesso!
+          </div>
+          <div className="bio-confirm-actions">
+            <button className="btn-bio-retry" onClick={recapturar}>Refazer</button>
+            <button className="btn-bio-confirm" onClick={confirmar}>
+              Confirmar e Entrar
+            </button>
+          </div>
+        </div>
+      )}
+
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+/* ─── Main Component ─────────────────────────────── */
 export default function Auth() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // 'form' | 'biometric'
+  const [step, setStep] = useState('form');
   const [isLogin, setIsLogin] = useState(true);
   const [cpfErro, setCpfErro] = useState('');
+  const [emailErro, setEmailErro] = useState('');
   const [cepErro, setCepErro] = useState('');
   const [buscandoCep, setBuscandoCep] = useState(false);
 
@@ -56,10 +179,15 @@ export default function Auth() {
   });
 
   const [semConvenio, setSemConvenio] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const senhaCheck = checarSenha(formData.senha);
+  const senhaValida = senhaCheck.minLen && senhaCheck.special && senhaCheck.noRepeat;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setIsLogin(params.get('mode') !== 'register');
+    setStep('form');
   }, [location]);
 
   const isFormValid = () => {
@@ -77,7 +205,9 @@ export default function Auth() {
       formData.celular &&
       formData.email &&
       formData.senha &&
-      !cpfErro;
+      !cpfErro &&
+      !emailErro &&
+      senhaValida;
 
     const convenioValid =
       semConvenio || (formData.convenio && formData.carteirinha);
@@ -88,6 +218,16 @@ export default function Auth() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEmailChange = (e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, email: value }));
+    if (value && !validarEmail(value)) {
+      setEmailErro('E-mail inválido. Verifique o formato informado.');
+    } else {
+      setEmailErro('');
+    }
   };
 
   const handleCpfChange = (e) => {
@@ -130,6 +270,28 @@ export default function Auth() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isFormValid()) return;
+    if (!isLogin) {
+      localStorage.setItem('paciente', JSON.stringify(formData));
+      setStep('biometric');
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  if (step === 'biometric') {
+    return (
+      <div className="auth-page auth-page-bio">
+        <BiometricStep
+          nome={formData.nome}
+          onComplete={() => navigate('/dashboard')}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="auth-page">
       <div className="auth-hero">
@@ -147,7 +309,7 @@ export default function Auth() {
         <div className="form-box scrollable">
           <h2>{isLogin ? 'Entrar' : 'Criar Conta'}</h2>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit}>
             {!isLogin && (
               <>
                 <div className="input-group">
@@ -310,16 +472,55 @@ export default function Auth() {
               <label>Email</label>
               <div className="input-wrapper">
                 <Mail className="input-icon" size={20} />
-                <input name="email" type="email" onChange={handleChange} />
+                <input
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleEmailChange}
+                  placeholder="seu@email.com"
+                />
               </div>
+              {emailErro && <span className="field-error">{emailErro}</span>}
             </div>
 
             <div className="input-group">
               <label>Senha</label>
               <div className="input-wrapper">
                 <Lock className="input-icon" size={20} />
-                <input name="senha" type="password" onChange={handleChange} />
+                <input
+                  name="senha"
+                  type={mostrarSenha ? 'text' : 'password'}
+                  value={formData.senha}
+                  onChange={handleChange}
+                  placeholder="Mínimo 8 caracteres"
+                />
+                <button
+                  type="button"
+                  className="toggle-senha"
+                  onClick={() => setMostrarSenha((v) => !v)}
+                  tabIndex={-1}
+                  aria-label="Mostrar/ocultar senha"
+                >
+                  {mostrarSenha ? '🙈' : '👁️'}
+                </button>
               </div>
+
+              {!isLogin && formData.senha && (
+                <ul className="senha-rules">
+                  <li className={senhaCheck.minLen ? 'ok' : 'fail'}>
+                    {senhaCheck.minLen ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Mínimo 8 caracteres
+                  </li>
+                  <li className={senhaCheck.special ? 'ok' : 'fail'}>
+                    {senhaCheck.special ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Pelo menos 1 caractere especial (!@#$%...)
+                  </li>
+                  <li className={senhaCheck.noRepeat ? 'ok' : 'fail'}>
+                    {senhaCheck.noRepeat ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Sem 3 ou mais caracteres idênticos seguidos
+                  </li>
+                </ul>
+              )}
             </div>
 
             <button
@@ -327,7 +528,7 @@ export default function Auth() {
               className={`btn-auth-submit ${!isFormValid() ? 'disabled' : ''}`}
               disabled={!isFormValid()}
             >
-              {isLogin ? 'Entrar' : 'Cadastrar'}
+              {isLogin ? 'Entrar' : 'Cadastrar e Registrar Biometria →'}
             </button>
           </form>
 

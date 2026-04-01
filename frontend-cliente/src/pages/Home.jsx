@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Stethoscope, Calendar, FileText, Search, MapPin,
-  MessageCircle, Accessibility, Eye, Phone, Navigation,
+  MessageCircle, Accessibility, Eye, Navigation,
   Clock, Star
 } from 'lucide-react';
 import '../styles/Home.css';
 
-const WHATSAPP_ZAYA = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
-const WHATSAPP_EQUIPE = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
+const WHATSAPP_ZAYA = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
 
 const Home = () => {
   const navigate = useNavigate();
@@ -98,16 +97,6 @@ const Home = () => {
         <section className="zaya-banner-section">
           <div className="zaya-banner-container">
             <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img" />
-            <div className="zaya-overlay-wrapper">
-              <button
-                className="btn-zaya-overlay"
-                onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
-                aria-label="Fale com a Zaya no WhatsApp"
-              >
-                <span className="chat-icon">💬</span>
-                Falar com a Zaya
-              </button>
-            </div>
           </div>
         </section>
 
@@ -130,9 +119,14 @@ const Home = () => {
               >
                 Agendar Agora
               </button>
-              <a href={WHATSAPP_EQUIPE} className="btn-secondary-cta" target="_blank" rel="noreferrer">
-                <Phone size={16} /> Falar com a Equipe
-              </a>
+              <button
+                className="btn-zaya-hero"
+                onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
+                aria-label="Fale com a Zaya no WhatsApp"
+              >
+                <span className="zaya-hero-icon">💬</span>
+                Falar com a Zaya
+              </button>
             </div>
           </div>
           <div className="hero-image">
@@ -283,7 +277,7 @@ const Home = () => {
 
       {/* WhatsApp flutuante */}
       <a
-        href="https://wa.me/5521999999999"
+        href="https://wa.me/5521973113276"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"

@@ -1,201 +1,579 @@
-.dashboard-container {
+/* =============================================
+   DASHBOARD — PAINEL DO PACIENTE
+   Clínica Dr. Eduardo · Teal + Orange
+   ============================================= */
+
+.dash-wrapper {
   min-height: 100vh;
-  background: var(--background);
+  background: #f0fffe;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  color: #0d3b3e;
+  padding-bottom: 80px;
 }
 
-.navbar {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 20px 40px;
+/* ── Navbar ─────────────────────────────────── */
+.dash-nav {
+  background: linear-gradient(135deg, #00c9b1 0%, #00a896 55%, #007a8a 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 20px rgba(0, 150, 136, 0.4);
+}
+
+.dash-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 68px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow-md);
 }
 
-.navbar-left h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-.navbar-right {
+.dash-logo {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 }
 
-.user-name {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.logout-btn {
+.dash-logo-icon {
   background: rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dash-logo-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.4px;
+  line-height: 1.2;
+}
+
+.dash-logo-sub {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dash-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-user-pill {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 6px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.dash-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
   border-radius: 8px;
-  border: none;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dash-logout-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Welcome Banner ─────────────────────────── */
+.dash-welcome {
+  background: linear-gradient(135deg, #00a896 0%, #007a8a 100%);
+  padding: 32px 24px;
+}
+
+.dash-welcome-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dash-welcome-text h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.dash-welcome-text p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+.dash-welcome-text strong {
+  color: #fff;
+}
+
+.dash-facial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+/* ── Content ────────────────────────────────── */
+.dash-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.dash-section-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #007a8a;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
 }
 
-.logout-btn:hover {
+/* ── Appointment Card ───────────────────────── */
+.appt-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 28px rgba(0, 122, 138, 0.1);
+  border: 1.5px solid #d0f0ec;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.appt-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.appt-avatar {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 168, 150, 0.3);
+}
+
+.appt-doctor-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.appt-doctor-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0d3b3e;
+}
+
+.appt-specialty {
+  font-size: 13px;
+  color: #4a7c80;
+  font-weight: 600;
+}
+
+.appt-convenio-badge {
+  display: inline-block;
+  background: #e0faf7;
+  color: #007a8a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-top: 2px;
+  border: 1px solid #b2ede7;
+}
+
+.appt-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff8c42, #f97316);
+  border-radius: 14px;
+  min-width: 64px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3);
+}
+
+.appt-days {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.appt-days-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.appt-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.appt-detail-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #4a7c80;
+  font-weight: 600;
+  background: #f0fffe;
+  border: 1px solid #c8f0eb;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.appt-detail-item svg {
+  color: #00c9b1;
+  flex-shrink: 0;
+}
+
+.appt-facial-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: linear-gradient(135deg, #e0faf7, #f0fffe);
+  border: 1.5px solid #00c9b1;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #007a8a;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.appt-facial-notice svg {
+  color: #00c9b1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.appt-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-appt-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ff8c42 0%, #f97316 100%);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+  text-decoration: none;
+}
+
+.btn-appt-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.45);
+}
+
+.btn-appt-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #007a8a;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 11px 22px;
+  border: 2px solid #007a8a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+}
+
+.btn-appt-ghost:hover {
+  background: #007a8a;
+  color: #fff;
+}
+
+/* ── Quick Actions ──────────────────────────── */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.quick-card {
+  background: #fff;
+  border: 1.5px solid #d0f0ec;
+  border-radius: 16px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 3px 14px rgba(0, 122, 138, 0.07);
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d3b3e;
+  text-align: center;
+}
+
+.quick-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 168, 150, 0.15);
+  border-color: #00c9b1;
+}
+
+.quick-card-primary {
+  background: linear-gradient(135deg, #ff8c42 0%, #f97316 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 5px 18px rgba(249, 115, 22, 0.35);
+}
+
+.quick-card-primary:hover {
+  border-color: transparent;
+  box-shadow: 0 12px 32px rgba(249, 115, 22, 0.5);
+}
+
+.quick-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #e0faf7, #c8f5ee);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00c9b1;
+  transition: all 0.3s;
+}
+
+.quick-card-primary .quick-icon {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.quick-card:hover .quick-icon {
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+}
+
+.quick-card-primary:hover .quick-icon {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.welcome-section {
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.welcome-section h1 {
-  color: var(--text);
-  margin-bottom: 8px;
-  font-size: 28px;
-}
-
-.welcome-section p {
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.stat-card {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
+/* ── Prep Card ──────────────────────────────── */
+.prep-card {
+  background: #fff;
+  border: 1.5px solid #d0f0ec;
+  border-left: 4px solid #f97316;
+  border-radius: 14px;
+  padding: 20px 22px;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 3px 14px rgba(0, 122, 138, 0.07);
 }
 
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+.prep-icon {
+  font-size: 24px;
+  flex-shrink: 0;
 }
 
-.stat-card svg {
-  color: var(--primary);
-  width: 32px;
-  height: 32px;
+.prep-body h3 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0d3b3e;
+  margin-bottom: 6px;
 }
 
-.stat-label {
-  color: var(--text-secondary);
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin: 0;
+.prep-body p {
+  font-size: 14px;
+  color: #4a7c80;
+  line-height: 1.6;
 }
 
-.stat-value {
-  color: var(--text);
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0;
+/* ── Zaya Flutuante ─────────────────────────── */
+.dash-zaya-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 14px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(18, 140, 126, 0.5);
+  z-index: 1000;
+  transition: all 0.3s;
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
-.action-buttons {
-  display: flex;
-  gap: 20px;
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  justify-content: center;
+.dash-zaya-float:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 36px rgba(18, 140, 126, 0.65);
 }
 
-button[class^="btn-"] {
-  padding: 15px 30px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 200px;
-}
-
-.btn-agendar {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: var(--shadow-md);
-}
-
-.btn-agendar:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn-historico {
-  background: var(--gradient-secondary);
-  color: white;
-  box-shadow: var(--shadow-md);
-}
-
-.btn-historico:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn-perfil {
-  background: white;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.btn-perfil:hover {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-2px);
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
+  .dash-nav-inner {
+    height: auto;
+    padding: 14px 16px;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    align-items: flex-start;
   }
 
-  .navbar-left h1 {
-    font-size: 20px;
-  }
-
-  .navbar-right {
+  .dash-nav-right {
     width: 100%;
     justify-content: space-between;
   }
 
-  .welcome-section {
-    padding: 20px;
+  .dash-welcome {
+    padding: 24px 16px;
   }
 
-  .stats-grid {
-    padding: 20px;
+  .dash-welcome-text h1 {
+    font-size: 1.3rem;
   }
 
-  .action-buttons {
+  .dash-content {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .appt-top {
+    flex-wrap: wrap;
+  }
+
+  .appt-countdown {
+    align-self: flex-start;
+  }
+
+  .appt-actions {
     flex-direction: column;
   }
 
-  button[class^="btn-"] {
+  .btn-appt-orange,
+  .btn-appt-ghost {
     width: 100%;
+    justify-content: center;
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-zaya-float span {
+    display: none;
+  }
+
+  .dash-zaya-float {
+    width: 58px;
+    height: 58px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-logo-name {
+    font-size: 12px;
+  }
+
+  .dash-welcome-text h1 {
+    font-size: 1.15rem;
+  }
+
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .quick-card {
+    padding: 18px 12px;
+    font-size: 12px;
+  }
+
+  .quick-icon {
+    width: 48px;
+    height: 48px;
   }
 }

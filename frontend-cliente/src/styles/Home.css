@@ -161,84 +161,73 @@
   display: block;
 }
 
-/* ==================== BOTÃO ZAYA COM ANIMAÇÕES ==================== */
-.zaya-overlay-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.btn-zaya-overlay {
+/* ==================== BOTÃO ZAYA NO HERO ==================== */
+.btn-zaya-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-  background-size: 200% auto;
-  color: white;
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  padding: 16px 44px;
-  font-size: 17px;
+  color: #fff;
   font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.4px;
+  padding: 14px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 28px rgba(18, 140, 126, 0.55), 0 2px 8px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  box-shadow: 0 5px 22px rgba(18, 140, 126, 0.45);
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-zaya-overlay:hover {
+.btn-zaya-hero:hover {
   background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 14px 38px rgba(18, 140, 126, 0.65), 0 4px 14px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 32px rgba(18, 140, 126, 0.6);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
-.btn-zaya-overlay:active {
+.btn-zaya-hero:active {
   transform: translateY(0) scale(1);
 }
 
-/* ÍCONE DO CHAT COM ANIMAÇÃO */
-.btn-zaya-overlay .chat-icon {
+.zaya-hero-icon {
+  font-size: 20px;
+  animation: bounceIcon 1.5s ease-in-out infinite;
   display: inline-block;
-  font-size: 22px;
-  animation: bounce 1.5s ease-in-out infinite;
 }
 
-/* ANIMAÇÃO SHIMMER (brilho deslizante) */
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-  100% { background-position: 0% center; }
-}
-
-/* ANIMAÇÃO BOUNCE (pulo do ícone) */
-@keyframes bounce {
+@keyframes bounceIcon {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-4px); }
 }
 
-/* EFEITO HOVER - BRILHO PASANDO PELO BOTÃO */
-.btn-zaya-overlay::after {
+.btn-zaya-hero::after {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transition: left 0.5s;
   border-radius: 50px;
   pointer-events: none;
 }
 
-.btn-zaya-overlay:hover::after {
+.btn-zaya-hero:hover::after {
   left: 100%;
+}
+
+/* Legacy overlay button styles kept for backwards compatibility */
+.zaya-overlay-wrapper {
+  display: none;
+}
+.btn-zaya-overlay {
+  display: none;
 }
 
 /* === HERO === */
@@ -823,6 +812,17 @@
   .hero-image img {
     max-height: 280px;
   }
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-primary-cta,
+  .btn-zaya-hero {
+    width: 100%;
+    justify-content: center;
+    font-size: 15px;
+    padding: 14px 24px;
+  }
   .services-section {
     padding: 48px 16px;
   }
@@ -861,8 +861,11 @@
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .btn-zaya-overlay {
+  .btn-zaya-hero {
     font-size: 14px;
-    padding: 13px 28px;
+    padding: 13px 20px;
+  }
+  .zaya-hero-icon {
+    font-size: 18px;
   }
 }
