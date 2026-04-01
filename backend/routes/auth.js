@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 // Configurar email
 const transporter = nodemailer.createTransport({
@@ -54,7 +55,7 @@ async function registroPaciente(req, res) {
 
     // Hash da senha
     const senhaHash = await bcrypt.hash(senha, 10);
-    const codigoVerificacao = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const codigoVerificacao = crypto.randomInt(0, 1000000).toString().padStart(6, '0');
 
     // 3. Criar paciente (Incluindo a coluna carteirinha)
     const result = await req.pool.query(

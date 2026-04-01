@@ -70,11 +70,10 @@ app.get('/health', (req, res) => {
 // ==========================================
 app.use((err, req, res, next) => {
   console.error('❌ Erro:', err);
+  const status = (err && err.status) || 500;
   const mensagem = (err && err.message) ? err.message : 'Erro desconhecido';
-  res.status((err && err.status) || 500).json({
-    erro: 'Erro interno do servidor',
-    mensagem
-  });
+  const erro = status >= 500 ? 'Erro interno do servidor' : mensagem;
+  res.status(status).json({ erro, mensagem });
 });
 
 // ==========================================
