@@ -1,52 +1,54 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Stethoscope } from 'lucide-react'; // Importando só o que usa
-import '../styles/Home.css'; // <--- O CAMINHO TEM QUE SER ESSE
+/* --- Reset e Layout --- */
+.home-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+.home-nav { background-color: #00ced1; color: #fff; padding: 15px 0; width: 100%; }
+.nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+.home-logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon-bg { background: rgba(255,255,255,0.3); padding: 8px; border-radius: 8px; display: flex; }
+.logo-text-box { display: flex; flex-direction: column; }
+.dr-name { font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+.dr-sub { font-size: 10px; letter-spacing: 2px; opacity: 0.85; }
+.nav-actions { display: flex; gap: 10px; }
+.btn-nav-outline { border: 1px solid #fff; color: #fff; text-decoration: none; padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; }
 
-const Home = () => {
-  const navigate = useNavigate();
+/* --- BANNER ZAYA --- */
+.zaya-banner-section { width: 100%; overflow: hidden; background-color: #0b2239; }
+.zaya-banner-container { position: relative; width: 100%; max-width: 1920px; margin: 0 auto; }
+.zaya-full-img { width: 100%; height: auto; display: block; }
 
-  const abrirWhatsZaya = () => {
-    const numeroWhats = "5521999999999"; 
-    const mensagem = encodeURIComponent("Olá Zaya! Preciso de ajuda com um agendamento.");
-    window.open(`https://wa.me/${numeroWhats}?text=${mensagem}`, "_blank");
-  };
+/* POSICIONAMENTO DO BOTÃO EM CIMA DO LARANJA DA FOTO */
+.btn-zaya-overlay {
+  position: absolute;
+  top: 61%; /* Ajuste aqui se o botão subir/descer */
+  left: 6.5%; /* Ajuste aqui se o botão for para os lados */
+  width: 13%; /* Largura proporcional ao botão da foto */
+  height: 6%; /* Altura proporcional */
 
-  return (
-    <div className="home-wrapper">
-      <nav className="home-nav">
-        <div className="nav-container">
-          <div className="home-logo">
-            <div className="logo-icon-bg"><Stethoscope size={22} color="#fff" /></div>
-            <div className="logo-text-box">
-              <strong className="dr-name">CLÍNICA DR. EDUARDO</strong>
-              <span className="dr-sub">EXCELÊNCIA EM SAÚDE</span>
-            </div>
-          </div>
-          <div className="nav-actions">
-            <Link to="/auth" className="btn-nav-outline">ENTRAR</Link>
-            <Link to="/auth?mode=register" className="btn-nav-outline">CADASTRE-SE</Link>
-          </div>
-        </div>
-      </nav>
+  background-color: transparent; /* Fica invisível para usar o da foto */
+  color: transparent; /* Esconde o texto */
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
 
-      <main>
-        <section className="zaya-banner-section">
-          <div className="zaya-banner-container">
-            <img src="/zaya-banner.jpg" alt="Zaya Banner" className="zaya-full-img" />
-            <button className="btn-zaya-overlay" onClick={abrirWhatsZaya}></button>
-          </div>
-        </section>
-      </main>
+/* Se quiser que o botão apareça (caso a foto corte), use:
+   background-color: #ff7f00; color: #fff;
+*/
 
-      <footer className="home-footer">
-        <div className="footer-container">
-          <strong>CLÍNICA DR. EDUARDO</strong>
-          <div className="footer-contact"><span>Barra da Tijuca, RJ</span></div>
-        </div>
-      </footer>
-    </div>
-  );
-};
+/* FOOTER */
+.home-footer { background: #f8fafc; padding: 40px 20px; border-top: 1px solid #e2e8f0; margin-top: auto; }
+.footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #008b8b; }
+.footer-contact { display: flex; gap: 8px; font-weight: 400; color: #555; }
 
-export default Home;
+.whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 2000; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  .home-hero { flex-direction: column; text-align: center; padding: 40px 20px; }
+  .hero-image { order: -1; justify-content: center; }
+  .hero-title { font-size: 2.5rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-container { flex-direction: column; gap: 20px; }
+  .nav-actions { gap: 6px; }
+  .btn-nav-outline { padding: 6px 12px; font-size: 12px; }
+}

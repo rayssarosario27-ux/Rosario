@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Stethoscope } from 'lucide-react';
-import '../styles/Home.css';
+import './styles/Home.css';
 
 const Home = () => {
   const abrirWhatsZaya = () => {
