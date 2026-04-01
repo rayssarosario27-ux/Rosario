@@ -108,6 +108,11 @@
   margin-bottom: 6px;
 }
 
+.label-required {
+  color: #e05252;
+  font-weight: 800;
+}
+
 .input-wrapper {
   position: relative;
 }

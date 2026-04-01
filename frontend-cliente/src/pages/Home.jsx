@@ -146,22 +146,22 @@ const Home = () => {
               <h2 className="section-title">Serviços mais procurados</h2>
             </div>
             <div className="services-grid">
-              <div className="service-card">
+              <button className="service-card" onClick={() => navigate('/agendamento')}>
                 <div className="service-icon"><Calendar size={28} /></div>
                 <span>Marcar Consulta</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button className="service-card" onClick={() => navigate('/exames')}>
                 <div className="service-icon"><FileText size={28} /></div>
                 <span>Exames Online</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button className="service-card" onClick={() => navigate('/corpo-clinico')}>
                 <div className="service-icon"><Search size={28} /></div>
                 <span>Corpo Clínico</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button className="service-card" onClick={() => navigate('/unidades')}>
                 <div className="service-icon"><MapPin size={28} /></div>
                 <span>Unidades</span>
-              </div>
+              </button>
             </div>
           </div>
         </section>
@@ -270,20 +270,35 @@ const Home = () => {
           <div className="footer-contact">
             <span><MapPin size={13} /> Barra da Tijuca, RJ</span>
             <span>·</span>
-            <span>(21) 99999-9999</span>
+            <span>(21) 97311-3276</span>
           </div>
         </div>
       </footer>
 
-      {/* WhatsApp flutuante */}
+      {/* WhatsApp flutuante — Perfil Zaya */}
       <a
         href="https://wa.me/5521973113276"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"
-        aria-label="Contato via WhatsApp"
+        aria-label="Fale com a Zaya no WhatsApp"
       >
-        <MessageCircle size={28} color="#fff" />
+        <div className="wa-float-avatar">
+          <img
+            src="/zaya-avatar.jpg"
+            alt="Zaya"
+            className="wa-float-img"
+            onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+          />
+          <span className="wa-float-fallback">🤖</span>
+        </div>
+        <div className="wa-float-badge">
+          <span className="wa-float-name">Zaya</span>
+          <span className="wa-float-status">● Online agora</span>
+        </div>
+        <div className="wa-float-icon">
+          <MessageCircle size={18} color="#fff" />
+        </div>
       </a>
     </div>
   );

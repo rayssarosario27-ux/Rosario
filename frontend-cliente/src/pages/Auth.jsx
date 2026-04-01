@@ -165,7 +165,9 @@ export default function Auth() {
     nome: '',
     cpf: '',
     dataNascimento: '',
-    endereco: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
     cep: '',
     cidade: '',
     bairro: '',
@@ -179,6 +181,7 @@ export default function Auth() {
   });
 
   const [semConvenio, setSemConvenio] = useState(false);
+  const [semTelefoneFixo, setSemTelefoneFixo] = useState(false);
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const senhaCheck = checarSenha(formData.senha);
@@ -197,7 +200,8 @@ export default function Auth() {
       formData.nome &&
       formData.cpf &&
       formData.dataNascimento &&
-      formData.endereco &&
+      formData.logradouro &&
+      formData.numero &&
       formData.cep &&
       formData.cidade &&
       formData.bairro &&
@@ -244,7 +248,7 @@ export default function Auth() {
   const handleCepChange = async (e) => {
     const raw = e.target.value.replace(/\D/g, '').slice(0, 8);
     const formatted = raw.length > 5 ? raw.replace(/(\d{5})(\d{1,3})/, '$1-$2') : raw;
-    setFormData((prev) => ({ ...prev, cep: formatted, cidade: '', bairro: '' }));
+    setFormData((prev) => ({ ...prev, cep: formatted, logradouro: '', cidade: '', bairro: '' }));
     setCepErro('');
 
     if (raw.length === 8) {
@@ -258,6 +262,7 @@ export default function Auth() {
         } else {
           setFormData((prev) => ({
             ...prev,
+            logradouro: data.logradouro || '',
             cidade: data.localidade || '',
             bairro: data.bairro || '',
           }));
@@ -406,14 +411,45 @@ export default function Auth() {
                 </div>
 
                 <div className="input-group">
-                  <label>Endereço</label>
+                  <label>Logradouro</label>
                   <div className="input-wrapper">
                     <MapPin className="input-icon" size={20} />
                     <input
-                      name="endereco"
+                      name="logradouro"
+                      value={formData.logradouro}
                       onChange={handleChange}
-                      placeholder="Rua, número, complemento"
+                      placeholder="Preenchido pelo CEP"
                     />
+                  </div>
+                </div>
+
+                <div className="input-row">
+                  <div className="input-group">
+                    <label>Número <span className="label-required">*</span></label>
+                    <div className="input-wrapper">
+                      <Hash className="input-icon" size={20} />
+                      <input
+                        name="numero"
+                        value={formData.numero}
+                        onChange={handleChange}
+                        placeholder="Ex: 123"
+                        inputMode="numeric"
+                        maxLength={10}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label>Complemento</label>
+                    <div className="input-wrapper">
+                      <MapPin className="input-icon" size={20} />
+                      <input
+                        name="complemento"
+                        value={formData.complemento}
+                        onChange={handleChange}
+                        placeholder="Apto, Bloco... (opcional)"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -461,7 +497,24 @@ export default function Auth() {
                     <label>Telefone</label>
                     <div className="input-wrapper">
                       <Phone className="input-icon" size={20} />
-                      <input name="telefone" onChange={handleChange} />
+                      <input
+                        name="telefone"
+                        onChange={handleChange}
+                        disabled={semTelefoneFixo}
+                        value={semTelefoneFixo ? '' : formData.telefone}
+                      />
+                    </div>
+                    <div className="checkbox-group">
+                      <input
+                        type="checkbox"
+                        id="semTelefoneFixo"
+                        checked={semTelefoneFixo}
+                        onChange={() => {
+                          setSemTelefoneFixo(!semTelefoneFixo);
+                          setFormData((prev) => ({ ...prev, telefone: '' }));
+                        }}
+                      />
+                      <label htmlFor="semTelefoneFixo">Não tenho telefone fixo</label>
                     </div>
                   </div>
                 </div>
