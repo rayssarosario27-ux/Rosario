@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import '../styles/RecuperarSenha.css';
 
 export default function RecuperarSenha({ onVoltar }) {
+  const navigate = useNavigate();
+  const voltar = onVoltar || (() => navigate('/'));
+
   const [etapa, setEtapa] = useState(1);
   const [email, setEmail] = useState('');
   const [pacienteId, setPacienteId] = useState(null);
@@ -69,7 +73,7 @@ export default function RecuperarSenha({ onVoltar }) {
 
       if (data.sucesso) {
         setMensagem('✅ ' + data.mensagem);
-        setTimeout(() => onVoltar(), 2000);
+        setTimeout(() => voltar(), 2000);
       } else {
         setErro(data.erro || '❌ Erro ao resetar senha');
       }
@@ -82,7 +86,7 @@ export default function RecuperarSenha({ onVoltar }) {
   return (
     <div className="recuperar-container">
       <div className="recuperar-card">
-        <button className="btn-voltar" onClick={onVoltar} type="button">
+        <button className="btn-voltar" onClick={voltar} type="button">
           <ArrowLeft size={20} /> Voltar
         </button>
 
