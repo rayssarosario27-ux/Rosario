@@ -146,91 +146,331 @@
 .zaya-banner-section {
   width: 100%;
   overflow: hidden;
-  background: #005f6b;
   position: relative;
+  background: linear-gradient(135deg, #004d5a 0%, #006672 40%, #00a896 100%);
 }
+
 .zaya-banner-container {
   position: relative;
   width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
 }
+
+/* Imagem de fundo (se existir) */
 .zaya-full-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
   display: block;
 }
 
-/* ==================== BOTÃO ZAYA COM ANIMAÇÕES ==================== */
-.btn-zaya-overlay {
-  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-  background-size: 200% auto;
-  color: white;
-  border: none;
-  padding: 15px 40px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 50px;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+/* Overlay com conteúdo */
+.zaya-banner-overlay {
+  position: relative;
+  z-index: 1;
+  padding: 52px 24px;
+}
+
+.zaya-banner-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+/* ── Avatar animado ── */
+.zaya-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  z-index: 10;
 }
 
-.btn-zaya-overlay:hover {
-  animation: shimmer 2s infinite;
-  transform: translate(-50%, -50%) translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+.zaya-avatar-ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  animation: ringPulse 2.5s ease-in-out infinite;
 }
 
-.btn-zaya-overlay:active {
-  transform: translate(-50%, -50%) translateY(0);
+.zaya-ring-2 {
+  inset: -28px;
+  border-color: rgba(255, 255, 255, 0.12);
+  animation-delay: 0.8s;
 }
 
-/* ÍCONE DO CHAT COM ANIMAÇÃO */
-.btn-zaya-overlay .chat-icon {
-  display: inline-block;
-  font-size: 20px;
-  animation: bounce 1.5s ease-in-out infinite;
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.6; }
+  50%       { transform: scale(1.05); opacity: 1; }
 }
 
-/* ANIMAÇÃO SHIMMER (brilho deslizante) */
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-  100% { background-position: 0% center; }
+.zaya-avatar-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08));
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  animation: avatarFloat 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
 }
 
-/* ANIMAÇÃO BOUNCE (pulo do ícone) */
-@keyframes bounce {
+@keyframes avatarFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50%       { transform: translateY(-8px); }
 }
 
-/* EFEITO HOVER - BRILHO PASANDO PELO BOTÃO */
-.btn-zaya-overlay::after {
+.zaya-avatar-emoji {
+  font-size: 48px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+.zaya-online-dot {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  background: #25d366;
+  border-radius: 50%;
+  border: 3px solid #005f6b;
+  z-index: 3;
+  animation: dotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  50%       { box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+}
+
+/* ── Texto e balão ── */
+.zaya-banner-text {
+  flex: 1;
+  min-width: 260px;
+}
+
+.zaya-banner-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.zaya-banner-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.zaya-banner-title span {
+  color: #7fffd4;
+  position: relative;
+}
+
+.zaya-banner-title span::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7fffd4, transparent);
+  border-radius: 2px;
+}
+
+/* Chat bubble */
+.zaya-chat-bubble {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 0 16px 16px 16px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 480px;
+}
+
+.zaya-chat-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  border-width: 0 10px 10px 0;
+  border-style: solid;
+  border-color: transparent rgba(255, 255, 255, 0.25) transparent transparent;
+}
+
+.zaya-bubble-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+/* Typing dots */
+.zaya-typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.zaya-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+
+.zaya-typing span:nth-child(2) { animation-delay: 0.2s; }
+.zaya-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* CTA button */
+.btn-zaya-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-zaya-banner:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.55);
+}
+
+.zaya-btn-icon { font-size: 18px; }
+
+.zaya-btn-arrow {
+  opacity: 0.7;
+  transition: transform 0.2s;
+}
+
+.btn-zaya-banner:hover .zaya-btn-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .zaya-banner-inner {
+    flex-direction: column;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .zaya-banner-title { font-size: 1.5rem; }
+  .zaya-avatar-wrap { width: 90px; height: 90px; }
+  .zaya-avatar-circle { width: 76px; height: 76px; }
+  .zaya-avatar-emoji { font-size: 36px; }
+}
+
+/* ==================== BOTÃO ZAYA NO HERO ==================== */
+.btn-zaya-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 22px rgba(18, 140, 126, 0.45);
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-zaya-hero:hover {
+  background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 32px rgba(18, 140, 126, 0.6);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-zaya-hero:active {
+  transform: translateY(0) scale(1);
+}
+
+.zaya-hero-icon {
+  font-size: 20px;
+  animation: bounceIcon 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes bounceIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.btn-zaya-hero::after {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transition: left 0.5s;
   border-radius: 50px;
   pointer-events: none;
 }
 
-.btn-zaya-overlay:hover::after {
+.btn-zaya-hero:hover::after {
   left: 100%;
+}
+
+/* Legacy overlay button styles kept for backwards compatibility */
+.zaya-overlay-wrapper {
+  display: none;
+}
+.btn-zaya-overlay {
+  display: none;
 }
 
 /* === HERO === */
@@ -745,26 +985,109 @@
   gap: 4px;
 }
 
-/* === WHATSAPP FLUTUANTE === */
+/* === WHATSAPP FLUTUANTE — PERFIL ZAYA === */
 .whatsapp-float {
   position: fixed;
   bottom: 28px;
   right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  transition: all 0.3s;
+  text-decoration: none;
+  overflow: hidden;
+  border: 2px solid #25d366;
+  max-width: 64px;
+}
+
+.whatsapp-float:hover {
+  max-width: 260px;
+  box-shadow: 0 10px 36px rgba(37, 211, 102, 0.4);
+}
+
+.wa-float-avatar {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50px 0 0 50px;
+  background: linear-gradient(135deg, #00c9b1, #007a8a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.wa-float-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wa-float-fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  width: 100%;
+  height: 100%;
+}
+
+.wa-float-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 8px 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  width: 0;
+  transition: all 0.3s;
+}
+
+.whatsapp-float:hover .wa-float-badge {
+  opacity: 1;
+  width: auto;
+}
+
+.wa-float-name {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0d3b3e;
+}
+
+.wa-float-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: #25d366;
+}
+
+.wa-float-icon {
   background: #25d366;
-  width: 60px;
-  height: 60px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
-  z-index: 2000;
+  margin-right: 10px;
+  flex-shrink: 0;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
   transition: all 0.3s;
-  text-decoration: none;
 }
-.whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
+
+.whatsapp-float:hover .wa-float-icon {
+  opacity: 1;
+  width: 36px;
+  margin-right: 10px;
 }
 
 /* ==============================================
@@ -799,4 +1122,76 @@
     padding: 0 16px;
   }
   .dr-name {
-    font-size: *
+    font-size: 13px;
+  }
+  .dr-sub {
+    display: none;
+  }
+  .home-hero {
+    flex-direction: column;
+    gap: 32px;
+    padding: 48px 16px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-image img {
+    max-height: 280px;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-primary-cta,
+  .btn-zaya-hero {
+    width: 100%;
+    justify-content: center;
+    font-size: 15px;
+    padding: 14px 24px;
+  }
+  .services-section {
+    padding: 48px 16px;
+  }
+  .dora-section {
+    padding: 48px 16px;
+  }
+  .dora-container h3 {
+    font-size: 1.4rem;
+  }
+  .clinica-section {
+    padding: 48px 16px;
+  }
+  .clinica-search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-buscar,
+  .btn-localizar {
+    width: 100%;
+    justify-content: center;
+  }
+  .home-footer {
+    padding: 28px 16px;
+  }
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .btn-zaya-hero {
+    font-size: 14px;
+    padding: 13px 20px;
+  }
+  .zaya-hero-icon {
+    font-size: 18px;
+  }
+}

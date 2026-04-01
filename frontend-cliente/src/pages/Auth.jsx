@@ -1,17 +1,302 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, ArrowLeft, CreditCard, Phone, Smartphone, Hash } from 'lucide-react';
+import {
+  Mail, Lock, User, ArrowLeft, CreditCard, Phone,
+  Smartphone, Hash, MapPin, Globe, Calendar,
+  CheckCircle, XCircle, Camera, Scan
+} from 'lucide-react';
 import '../styles/Auth.css';
 
+/* ─── CPF ─────────────────────────────────────────── */
+function validarCPF(cpf) {
+  const nums = cpf.replace(/\D/g, '');
+  if (nums.length !== 11 || /^(\d)\1+$/.test(nums)) return false;
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += parseInt(nums[i]) * (10 - i);
+  let r = (soma * 10) % 11;
+  if (r === 10 || r === 11) r = 0;
+  if (r !== parseInt(nums[9])) return false;
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += parseInt(nums[i]) * (11 - i);
+  r = (soma * 10) % 11;
+  if (r === 10 || r === 11) r = 0;
+  return r === parseInt(nums[10]);
+}
+
+function formatarCPF(valor) {
+  const nums = valor.replace(/\D/g, '').slice(0, 11);
+  return nums
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+/* ─── Email ───────────────────────────────────────── */
+function validarEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+/* ─── Senha ───────────────────────────────────────── */
+function checarSenha(senha) {
+  return {
+    minLen: senha.length >= 8,
+    special: /[!@#$%^&*()_=+{}[\];':"\\|,.<>/?`~-]/.test(senha),
+    noRepeat: !/(.)\1{2,}/.test(senha),
+  };
+}
+
+/* ─── Biometric Step ─────────────────────────────── */
+
+const GUIDE_STEPS = [
+  { id: 'frente',   icon: '😐', emoji: '⬆️', label: 'Olhe para a frente',     arrow: null,    dur: 3000 },
+  { id: 'direita',  icon: '😶', emoji: '➡️', label: 'Vire levemente para a direita', arrow: 'right', dur: 3000 },
+  { id: 'esquerda', icon: '😶', emoji: '⬅️', label: 'Vire levemente para a esquerda', arrow: 'left', dur: 3000 },
+  { id: 'cima',     icon: '🙂', emoji: '⬆️', label: 'Olhe levemente para cima', arrow: 'up',   dur: 2500 },
+  { id: 'baixo',    icon: '🙂', emoji: '⬇️', label: 'Olhe levemente para baixo', arrow: 'down', dur: 2500 },
+  { id: 'sorriso',  icon: '😄', emoji: '😊', label: 'Agora sorria!',            arrow: null,    dur: 2000 },
+];
+
+function BiometricStep({ nome, onComplete }) {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const [stream, setStream] = useState(null);
+  const [captured, setCaptured] = useState(false);
+  const [camError, setCamError] = useState('');
+  const [imgData, setImgData] = useState(null);
+
+  // guide: 'intro' | 'scanning' | 'ready'
+  const [guidePhase, setGuidePhase] = useState('intro');
+  const [guideIdx, setGuideIdx]     = useState(0);
+  const [scanProgress, setScanProgress] = useState(0);
+
+  useEffect(() => {
+    startCamera();
+    return () => { stopCamera(); }; // timerRef cleanup handled inside interval
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /* auto-advance guide steps */
+  useEffect(() => {
+    if (guidePhase !== 'scanning') return;
+    const step = GUIDE_STEPS[guideIdx];
+    if (!step) { setGuidePhase('ready'); return; }
+
+    /* speak instruction via Web Speech API if available */
+    if (window.speechSynthesis) {
+      const utt = new window.SpeechSynthesisUtterance(step.label);
+      utt.lang = 'pt-BR';
+      utt.rate = 0.95;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utt);
+    }
+
+    setScanProgress(0);
+    const tick = 50;
+    const total = step.dur;
+    let elapsed = 0;
+    const interval = setInterval(() => {
+      elapsed += tick;
+      setScanProgress(Math.min(100, Math.round((elapsed / total) * 100)));
+      if (elapsed >= total) {
+        clearInterval(interval);
+        setGuideIdx((i) => i + 1);
+      }
+    }, tick);
+    return () => clearInterval(interval);
+  }, [guidePhase, guideIdx]);
+
+  const startCamera = async () => {
+    try {
+      const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+      setStream(s);
+      if (videoRef.current) videoRef.current.srcObject = s;
+    } catch {
+      setCamError('Não foi possível acessar a câmera. Verifique as permissões do navegador.');
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    window.speechSynthesis && window.speechSynthesis.cancel();
+  };
+
+  const startGuide = () => {
+    setGuideIdx(0);
+    setGuidePhase('scanning');
+  };
+
+  const capturar = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0);
+    const data = canvas.toDataURL('image/jpeg', 0.8);
+    setImgData(data);
+    setCaptured(true);
+    stopCamera();
+  };
+
+  const confirmar = () => {
+    localStorage.setItem('biometria', 'active');
+    onComplete();
+  };
+
+  const recapturar = () => {
+    setCaptured(false);
+    setImgData(null);
+    setGuidePhase('intro');
+    setGuideIdx(0);
+    startCamera();
+  };
+
+  const currentStep = GUIDE_STEPS[guideIdx] || GUIDE_STEPS[GUIDE_STEPS.length - 1];
+
+  return (
+    <div className="bio-step">
+      <div className="bio-header">
+        <Scan size={32} className="bio-icon" />
+        <h2>Cadastro de Biometria Facial</h2>
+        <p>
+          Olá, <strong>{nome || 'Paciente'}</strong>! Vamos registrar seu rosto para
+          acesso pela catraca de reconhecimento facial.
+        </p>
+      </div>
+
+      {camError ? (
+        <div className="bio-error">
+          <XCircle size={24} />
+          <span>{camError}</span>
+          <button className="btn-auth-submit" onClick={onComplete} style={{ marginTop: 16 }}>
+            Pular por enquanto
+          </button>
+        </div>
+
+      ) : !captured ? (
+        <div className="bio-camera-area">
+
+          {/* Assistente Zaya falando */}
+          {guidePhase !== 'intro' && !captured && (
+            <div className="bio-assistant-bubble">
+              <div className="bio-assistant-avatar">🤖</div>
+              <div className="bio-assistant-text">
+                <span className="bio-assistant-label">
+                  {guidePhase === 'ready'
+                    ? '✅ Perfeito! Agora clique em Capturar.'
+                    : currentStep.label}
+                </span>
+                {guidePhase === 'scanning' && (
+                  <div className="bio-progress-bar-wrap">
+                    <div className="bio-progress-bar-fill" style={{ width: `${scanProgress}%` }} />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Vídeo + guia de direção */}
+          <div className={`bio-video-frame ${guidePhase === 'scanning' ? 'scanning' : ''} ${guidePhase === 'ready' ? 'ready' : ''}`}>
+            <video ref={videoRef} autoPlay playsInline muted className="bio-video" />
+            <div className="bio-face-guide" />
+
+            {/* Seta direcional */}
+            {guidePhase === 'scanning' && currentStep.arrow && (
+              <div className={`bio-direction-arrow arrow-${currentStep.arrow}`}>
+                {currentStep.arrow === 'right' && '→'}
+                {currentStep.arrow === 'left'  && '←'}
+                {currentStep.arrow === 'up'    && '↑'}
+                {currentStep.arrow === 'down'  && '↓'}
+              </div>
+            )}
+
+            {/* Ícone do passo atual */}
+            {guidePhase === 'scanning' && (
+              <div className="bio-step-emoji">{currentStep.emoji}</div>
+            )}
+          </div>
+
+          {/* Passos em bolinha */}
+          {guidePhase === 'scanning' && (
+            <div className="bio-step-dots">
+              {GUIDE_STEPS.map((s, i) => (
+                <div
+                  key={s.id}
+                  className={`bio-dot ${i < guideIdx ? 'done' : ''} ${i === guideIdx ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+          )}
+
+          {guidePhase === 'intro' && (
+            <>
+              <p className="bio-hint">
+                Nosso assistente irá guiá-lo(a) passo a passo.<br/>
+                Posicione seu rosto no círculo e clique em Iniciar.
+              </p>
+              <button className="btn-bio-capture" onClick={startGuide}>
+                <Scan size={20} /> Iniciar Guia Facial
+              </button>
+            </>
+          )}
+
+          {guidePhase === 'ready' && (
+            <>
+              <p className="bio-hint bio-hint-success">
+                🎉 Escaneamento concluído! Clique para capturar sua foto.
+              </p>
+              <button className="btn-bio-capture" onClick={capturar}>
+                <Camera size={20} /> Capturar Rosto
+              </button>
+            </>
+          )}
+        </div>
+
+      ) : (
+        <div className="bio-captured-area">
+          <img src={imgData} alt="Foto capturada" className="bio-preview" />
+          <div className="bio-success-badge">
+            <CheckCircle size={20} /> Foto capturada com sucesso!
+          </div>
+          <div className="bio-confirm-actions">
+            <button className="btn-bio-retry" onClick={recapturar}>Refazer</button>
+            <button className="btn-bio-confirm" onClick={confirmar}>
+              Confirmar e Entrar
+            </button>
+          </div>
+        </div>
+      )}
+
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+/* ─── Main Component ─────────────────────────────── */
 export default function Auth() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // 'form' | 'biometric'
+  const [step, setStep] = useState('form');
   const [isLogin, setIsLogin] = useState(true);
+  const [cpfErro, setCpfErro] = useState('');
+  const [emailErro, setEmailErro] = useState('');
+  const [cepErro, setCepErro] = useState('');
+  const [buscandoCep, setBuscandoCep] = useState(false);
 
   const [formData, setFormData] = useState({
     nome: '',
     cpf: '',
+    dataNascimento: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
+    cep: '',
+    cidade: '',
+    bairro: '',
+    nacionalidade: '',
     convenio: '',
     carteirinha: '',
     celular: '',
@@ -21,10 +306,16 @@ export default function Auth() {
   });
 
   const [semConvenio, setSemConvenio] = useState(false);
+  const [semTelefoneFixo, setSemTelefoneFixo] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const senhaCheck = checarSenha(formData.senha);
+  const senhaValida = senhaCheck.minLen && senhaCheck.special && senhaCheck.noRepeat;
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setIsLogin(params.get('mode') !== 'register');
+    setStep('form');
   }, [location]);
 
   const isFormValid = () => {
@@ -33,9 +324,19 @@ export default function Auth() {
     const required =
       formData.nome &&
       formData.cpf &&
+      formData.dataNascimento &&
+      formData.logradouro &&
+      formData.numero &&
+      formData.cep &&
+      formData.cidade &&
+      formData.bairro &&
+      formData.nacionalidade &&
       formData.celular &&
       formData.email &&
-      formData.senha;
+      formData.senha &&
+      !cpfErro &&
+      !emailErro &&
+      senhaValida;
 
     const convenioValid =
       semConvenio || (formData.convenio && formData.carteirinha);
@@ -47,6 +348,79 @@ export default function Auth() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleEmailChange = (e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, email: value }));
+    if (value && !validarEmail(value)) {
+      setEmailErro('E-mail inválido. Verifique o formato informado.');
+    } else {
+      setEmailErro('');
+    }
+  };
+
+  const handleCpfChange = (e) => {
+    const formatted = formatarCPF(e.target.value);
+    setFormData((prev) => ({ ...prev, cpf: formatted }));
+    const raw = formatted.replace(/\D/g, '');
+    if (raw.length === 11) {
+      setCpfErro(validarCPF(raw) ? '' : 'CPF inválido. Verifique os números informados.');
+    } else {
+      setCpfErro('');
+    }
+  };
+
+  const handleCepChange = async (e) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 8);
+    const formatted = raw.length > 5 ? raw.replace(/(\d{5})(\d{1,3})/, '$1-$2') : raw;
+    setFormData((prev) => ({ ...prev, cep: formatted, logradouro: '', cidade: '', bairro: '' }));
+    setCepErro('');
+
+    if (raw.length === 8) {
+      setBuscandoCep(true);
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${raw}/json/`);
+        if (!res.ok) throw new Error('CEP lookup failed');
+        const data = await res.json();
+        if (data.erro) {
+          setCepErro('CEP não encontrado. Verifique o número informado.');
+        } else {
+          setFormData((prev) => ({
+            ...prev,
+            logradouro: data.logradouro || '',
+            cidade: data.localidade || '',
+            bairro: data.bairro || '',
+          }));
+        }
+      } catch {
+        setCepErro('Não foi possível buscar o CEP. Tente novamente.');
+      } finally {
+        setBuscandoCep(false);
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isFormValid()) return;
+    if (!isLogin) {
+      localStorage.setItem('paciente', JSON.stringify(formData));
+      setStep('biometric');
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  if (step === 'biometric') {
+    return (
+      <div className="auth-page auth-page-bio">
+        <BiometricStep
+          nome={formData.nome}
+          onComplete={() => navigate('/dashboard')}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="auth-page">
@@ -65,7 +439,7 @@ export default function Auth() {
         <div className="form-box scrollable">
           <h2>{isLogin ? 'Entrar' : 'Criar Conta'}</h2>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit}>
             {!isLogin && (
               <>
                 <div className="input-group">
@@ -80,7 +454,127 @@ export default function Auth() {
                   <label>CPF</label>
                   <div className="input-wrapper">
                     <Hash className="input-icon" size={20} />
-                    <input name="cpf" onChange={handleChange} />
+                    <input
+                      name="cpf"
+                      inputMode="numeric"
+                      value={formData.cpf}
+                      onChange={handleCpfChange}
+                      placeholder="000.000.000-00"
+                      maxLength={14}
+                    />
+                  </div>
+                  {cpfErro && <span className="field-error">{cpfErro}</span>}
+                </div>
+
+                <div className="input-group">
+                  <label>Data de Nascimento</label>
+                  <div className="input-wrapper">
+                    <Calendar className="input-icon" size={20} />
+                    <input
+                      name="dataNascimento"
+                      type="date"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label>Nacionalidade</label>
+                  <div className="input-wrapper">
+                    <Globe className="input-icon" size={20} />
+                    <input
+                      name="nacionalidade"
+                      onChange={handleChange}
+                      placeholder="Ex: Brasileira"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label>CEP</label>
+                  <div className="input-wrapper">
+                    <MapPin className="input-icon" size={20} />
+                    <input
+                      name="cep"
+                      inputMode="numeric"
+                      value={formData.cep}
+                      onChange={handleCepChange}
+                      placeholder="00000-000"
+                      maxLength={9}
+                    />
+                    {buscandoCep && <span className="cep-loading">Buscando...</span>}
+                  </div>
+                  {cepErro && <span className="field-error">{cepErro}</span>}
+                </div>
+
+                <div className="input-row">
+                  <div className="input-group">
+                    <label>Cidade</label>
+                    <div className="input-wrapper">
+                      <MapPin className="input-icon" size={20} />
+                      <input
+                        name="cidade"
+                        value={formData.cidade}
+                        onChange={handleChange}
+                        placeholder="Preenchido pelo CEP"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label>Bairro</label>
+                    <div className="input-wrapper">
+                      <MapPin className="input-icon" size={20} />
+                      <input
+                        name="bairro"
+                        value={formData.bairro}
+                        onChange={handleChange}
+                        placeholder="Preenchido pelo CEP"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <label>Logradouro</label>
+                  <div className="input-wrapper">
+                    <MapPin className="input-icon" size={20} />
+                    <input
+                      name="logradouro"
+                      value={formData.logradouro}
+                      onChange={handleChange}
+                      placeholder="Preenchido pelo CEP"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-row">
+                  <div className="input-group">
+                    <label>Número <span className="label-required">*</span></label>
+                    <div className="input-wrapper">
+                      <Hash className="input-icon" size={20} />
+                      <input
+                        name="numero"
+                        value={formData.numero}
+                        onChange={handleChange}
+                        placeholder="Ex: 123"
+                        inputMode="numeric"
+                        maxLength={10}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-group">
+                    <label>Complemento</label>
+                    <div className="input-wrapper">
+                      <MapPin className="input-icon" size={20} />
+                      <input
+                        name="complemento"
+                        value={formData.complemento}
+                        onChange={handleChange}
+                        placeholder="Apto, Bloco... (opcional)"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -128,7 +622,24 @@ export default function Auth() {
                     <label>Telefone</label>
                     <div className="input-wrapper">
                       <Phone className="input-icon" size={20} />
-                      <input name="telefone" onChange={handleChange} />
+                      <input
+                        name="telefone"
+                        onChange={handleChange}
+                        disabled={semTelefoneFixo}
+                        value={semTelefoneFixo ? '' : formData.telefone}
+                      />
+                    </div>
+                    <div className="checkbox-group">
+                      <input
+                        type="checkbox"
+                        id="semTelefoneFixo"
+                        checked={semTelefoneFixo}
+                        onChange={() => {
+                          setSemTelefoneFixo(!semTelefoneFixo);
+                          setFormData((prev) => ({ ...prev, telefone: '' }));
+                        }}
+                      />
+                      <label htmlFor="semTelefoneFixo">Não tenho telefone fixo</label>
                     </div>
                   </div>
                 </div>
@@ -139,16 +650,55 @@ export default function Auth() {
               <label>Email</label>
               <div className="input-wrapper">
                 <Mail className="input-icon" size={20} />
-                <input name="email" type="email" onChange={handleChange} />
+                <input
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleEmailChange}
+                  placeholder="seu@email.com"
+                />
               </div>
+              {emailErro && <span className="field-error">{emailErro}</span>}
             </div>
 
             <div className="input-group">
               <label>Senha</label>
               <div className="input-wrapper">
                 <Lock className="input-icon" size={20} />
-                <input name="senha" type="password" onChange={handleChange} />
+                <input
+                  name="senha"
+                  type={mostrarSenha ? 'text' : 'password'}
+                  value={formData.senha}
+                  onChange={handleChange}
+                  placeholder="Mínimo 8 caracteres"
+                />
+                <button
+                  type="button"
+                  className="toggle-senha"
+                  onClick={() => setMostrarSenha((v) => !v)}
+                  tabIndex={-1}
+                  aria-label="Mostrar/ocultar senha"
+                >
+                  {mostrarSenha ? '🙈' : '👁️'}
+                </button>
               </div>
+
+              {!isLogin && formData.senha && (
+                <ul className="senha-rules">
+                  <li className={senhaCheck.minLen ? 'ok' : 'fail'}>
+                    {senhaCheck.minLen ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Mínimo 8 caracteres
+                  </li>
+                  <li className={senhaCheck.special ? 'ok' : 'fail'}>
+                    {senhaCheck.special ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Pelo menos 1 caractere especial (!@#$%...)
+                  </li>
+                  <li className={senhaCheck.noRepeat ? 'ok' : 'fail'}>
+                    {senhaCheck.noRepeat ? <CheckCircle size={13} /> : <XCircle size={13} />}
+                    Sem 3 ou mais caracteres idênticos seguidos
+                  </li>
+                </ul>
+              )}
             </div>
 
             <button
@@ -156,9 +706,25 @@ export default function Auth() {
               className={`btn-auth-submit ${!isFormValid() ? 'disabled' : ''}`}
               disabled={!isFormValid()}
             >
-              {isLogin ? 'Entrar' : 'Cadastrar'}
+              {isLogin ? 'Entrar' : 'Cadastrar e Registrar Biometria →'}
             </button>
           </form>
+
+          {isLogin ? (
+            <p className="auth-switch-text">
+              Não tem cadastro?{' '}
+              <button className="auth-switch-link" onClick={() => navigate('/auth?mode=register')}>
+                Cadastre-se
+              </button>
+            </p>
+          ) : (
+            <p className="auth-switch-text">
+              Já tem cadastro?{' '}
+              <button className="auth-switch-link" onClick={() => navigate('/auth')}>
+                Entrar
+              </button>
+            </p>
+          )}
         </div>
       </div>
     </div>

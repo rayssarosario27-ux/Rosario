@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Stethoscope, Calendar, FileText, Search, MapPin,
-  MessageCircle, Accessibility, Eye, Phone, Navigation,
+  MessageCircle, Accessibility, Eye, Navigation,
   Clock, Star
 } from 'lucide-react';
 import '../styles/Home.css';
 
-const WHATSAPP_ZAYA = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
-const WHATSAPP_EQUIPE = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
+const WHATSAPP_ZAYA = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
 
 const Home = () => {
   const navigate = useNavigate();
@@ -97,12 +96,50 @@ const Home = () => {
         {/* Banner Zaya — primeiro abaixo do nav */}
         <section className="zaya-banner-section">
           <div className="zaya-banner-container">
-            <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img" />
-            <button
-              className="btn-zaya-overlay"
-              onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
-              aria-label="Fale com a Zaya no WhatsApp"
-            />
+            {/* Fundo da imagem (se existir) */}
+            <img src="/zaya-banner.jpg" alt="" className="zaya-full-img" aria-hidden="true" />
+
+            {/* Conteúdo por cima */}
+            <div className="zaya-banner-overlay">
+              <div className="zaya-banner-inner">
+                {/* Avatar animado da Zaya */}
+                <div className="zaya-avatar-wrap">
+                  <div className="zaya-avatar-ring" />
+                  <div className="zaya-avatar-ring zaya-ring-2" />
+                  <div className="zaya-avatar-circle">
+                    <span className="zaya-avatar-emoji">🤖</span>
+                  </div>
+                  <div className="zaya-online-dot" />
+                </div>
+
+                {/* Texto + balão de fala */}
+                <div className="zaya-banner-text">
+                  <div className="zaya-banner-tag">Assistente Virtual 24h</div>
+                  <h2 className="zaya-banner-title">
+                    Olá! Sou a <span>Zaya</span> ✨
+                  </h2>
+                  <div className="zaya-chat-bubble">
+                    <p className="zaya-bubble-text">
+                      Posso agendar sua consulta, tirar dúvidas sobre exames e muito mais —
+                      a qualquer hora do dia!
+                    </p>
+                    <div className="zaya-typing">
+                      <span /><span /><span />
+                    </div>
+                  </div>
+                  <a
+                    href={WHATSAPP_ZAYA}
+                    className="btn-zaya-banner"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="zaya-btn-icon">💬</span>
+                    Falar com a Zaya agora
+                    <span className="zaya-btn-arrow">→</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -125,9 +162,14 @@ const Home = () => {
               >
                 Agendar Agora
               </button>
-              <a href={WHATSAPP_EQUIPE} className="btn-secondary-cta" target="_blank" rel="noreferrer">
-                <Phone size={16} /> Falar com a Equipe
-              </a>
+              <button
+                className="btn-zaya-hero"
+                onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
+                aria-label="Fale com a Zaya no WhatsApp"
+              >
+                <span className="zaya-hero-icon">💬</span>
+                Falar com a Zaya
+              </button>
             </div>
           </div>
           <div className="hero-image">
@@ -147,22 +189,27 @@ const Home = () => {
               <h2 className="section-title">Serviços mais procurados</h2>
             </div>
             <div className="services-grid">
-              <div className="service-card">
+              <button className="service-card" onClick={() => navigate('/agendamento')}>
                 <div className="service-icon"><Calendar size={28} /></div>
                 <span>Marcar Consulta</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button className="service-card" onClick={() => navigate('/exames')}>
                 <div className="service-icon"><FileText size={28} /></div>
                 <span>Exames Online</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button className="service-card" onClick={() => navigate('/corpo-clinico')}>
                 <div className="service-icon"><Search size={28} /></div>
                 <span>Corpo Clínico</span>
-              </div>
-              <div className="service-card">
+              </button>
+              <button
+                className="service-card"
+                onClick={() => {
+                  document.getElementById('unidades')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
                 <div className="service-icon"><MapPin size={28} /></div>
                 <span>Unidades</span>
-              </div>
+              </button>
             </div>
           </div>
         </section>
@@ -182,7 +229,7 @@ const Home = () => {
         </section>
 
         {/* Encontre uma clínica */}
-        <section className="clinica-section">
+        <section id="unidades" className="clinica-section">
           <div className="clinica-inner">
             <div className="section-header centered">
               <span className="section-tag">Localização</span>
@@ -271,20 +318,35 @@ const Home = () => {
           <div className="footer-contact">
             <span><MapPin size={13} /> Barra da Tijuca, RJ</span>
             <span>·</span>
-            <span>(21) 99999-9999</span>
+            <span>(21) 97311-3276</span>
           </div>
         </div>
       </footer>
 
-      {/* WhatsApp flutuante */}
+      {/* WhatsApp flutuante — Perfil Zaya */}
       <a
-        href="https://wa.me/5521999999999"
+        href="https://wa.me/5521973113276"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"
-        aria-label="Contato via WhatsApp"
+        aria-label="Fale com a Zaya no WhatsApp"
       >
-        <MessageCircle size={28} color="#fff" />
+        <div className="wa-float-avatar">
+          <img
+            src="/zaya-avatar.jpg"
+            alt="Zaya"
+            className="wa-float-img"
+            onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+          />
+          <span className="wa-float-fallback">🤖</span>
+        </div>
+        <div className="wa-float-badge">
+          <span className="wa-float-name">Zaya</span>
+          <span className="wa-float-status">● Online agora</span>
+        </div>
+        <div className="wa-float-icon">
+          <MessageCircle size={18} color="#fff" />
+        </div>
       </a>
     </div>
   );

@@ -1,0 +1,255 @@
+/* =============================================
+   CORPO CLÍNICO — Médicos
+   ============================================= */
+
+.cc-wrapper {
+  min-height: 100vh;
+  background: #f0fffe;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  color: #0d3b3e;
+}
+
+.cc-nav {
+  background: linear-gradient(135deg, #00c9b1 0%, #00a896 55%, #007a8a 100%);
+  box-shadow: 0 3px 16px rgba(0, 150, 136, 0.35);
+}
+
+.cc-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cc-back:hover { background: rgba(255, 255, 255, 0.25); }
+
+.cc-nav-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.cc-hero {
+  background: linear-gradient(135deg, #00a896 0%, #007a8a 100%);
+  padding: 52px 24px 48px;
+  text-align: center;
+  color: #fff;
+}
+
+.cc-hero h1 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.cc-hero p {
+  font-size: 15px;
+  opacity: 0.85;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.cc-filtro {
+  max-width: 420px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  color: #0d3b3e;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.cc-filtro::placeholder { color: #a0c4c8; }
+
+.cc-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.cc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.cc-card {
+  background: #fff;
+  border: 1.5px solid #d0f0ec;
+  border-radius: 20px;
+  padding: 32px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 122, 138, 0.08);
+  transition: all 0.3s;
+  position: relative;
+}
+
+.cc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 168, 150, 0.15);
+  border-color: #00c9b1;
+}
+
+.cc-card.destaque {
+  border-color: #f97316;
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.18);
+}
+
+.cc-destaque-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff8c42, #f97316);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(249, 115, 22, 0.4);
+}
+
+.cc-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c9b1, #007a8a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(0, 168, 150, 0.3);
+}
+
+.cc-card.destaque .cc-avatar {
+  background: linear-gradient(135deg, #ff8c42, #f97316);
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+}
+
+.cc-nome {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0d3b3e;
+  margin-bottom: 8px;
+}
+
+.cc-esp-badge {
+  display: inline-block;
+  background: #e0faf7;
+  color: #007a8a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  border: 1px solid #b2ede7;
+}
+
+.cc-crm {
+  font-size: 11px;
+  color: #a0c4c8;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cc-formacao {
+  font-size: 12px;
+  color: #4a7c80;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.cc-bio {
+  font-size: 13px;
+  color: #6a9ca0;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.cc-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.cc-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4a7c80;
+}
+
+.cc-stat svg { color: #f97316; }
+
+.cc-btn-agendar {
+  width: 100%;
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(0, 168, 150, 0.3);
+}
+
+.cc-btn-agendar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 168, 150, 0.45);
+}
+
+.cc-card.destaque .cc-btn-agendar {
+  background: linear-gradient(135deg, #ff8c42, #f97316);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+}
+
+@media (max-width: 900px) {
+  .cc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cc-grid { grid-template-columns: 1fr; }
+  .cc-hero h1 { font-size: 1.5rem; }
+}

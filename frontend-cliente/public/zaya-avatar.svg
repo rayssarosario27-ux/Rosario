@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00c9b1"/>
+      <stop offset="100%" style="stop-color:#007a8a"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fde8d8"/>
+      <stop offset="100%" style="stop-color:#f5c5a3"/>
+    </linearGradient>
+    <clipPath id="circle">
+      <circle cx="100" cy="100" r="100"/>
+    </clipPath>
+  </defs>
+  <!-- Background -->
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <!-- Body -->
+  <ellipse cx="100" cy="185" rx="58" ry="40" fill="#005f6b" clip-path="url(#circle)"/>
+  <!-- Blouse detail -->
+  <ellipse cx="100" cy="175" rx="42" ry="30" fill="#00a896" clip-path="url(#circle)"/>
+  <!-- Neck -->
+  <rect x="88" y="128" width="24" height="26" rx="10" fill="url(#face)" clip-path="url(#circle)"/>
+  <!-- Head -->
+  <ellipse cx="100" cy="108" rx="38" ry="42" fill="url(#face)"/>
+  <!-- Hair top -->
+  <ellipse cx="100" cy="72" rx="40" ry="22" fill="#2d1a0e"/>
+  <!-- Hair sides -->
+  <ellipse cx="62" cy="105" rx="10" ry="22" fill="#2d1a0e"/>
+  <ellipse cx="138" cy="105" rx="10" ry="22" fill="#2d1a0e"/>
+  <!-- Hair back volume -->
+  <ellipse cx="100" cy="78" rx="36" ry="18" fill="#3d2510"/>
+  <!-- Ears -->
+  <ellipse cx="63" cy="110" rx="6" ry="8" fill="#f0b99a"/>
+  <ellipse cx="137" cy="110" rx="6" ry="8" fill="#f0b99a"/>
+  <!-- Eyes -->
+  <ellipse cx="86" cy="108" rx="7" ry="8" fill="#fff"/>
+  <ellipse cx="114" cy="108" rx="7" ry="8" fill="#fff"/>
+  <circle cx="87" cy="109" r="4.5" fill="#1a0a05"/>
+  <circle cx="115" cy="109" r="4.5" fill="#1a0a05"/>
+  <circle cx="88.5" cy="107.5" r="1.5" fill="#fff"/>
+  <circle cx="116.5" cy="107.5" r="1.5" fill="#fff"/>
+  <!-- Eyebrows -->
+  <path d="M79 100 Q86 97 93 100" stroke="#2d1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M107 100 Q114 97 121 100" stroke="#2d1a0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="100" cy="118" rx="3" ry="2" fill="#e8a585"/>
+  <!-- Smile -->
+  <path d="M90 126 Q100 134 110 126" stroke="#c07050" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Lips -->
+  <path d="M92 128 Q100 133 108 128" fill="#d4756a" opacity="0.7"/>
+  <!-- Headset/earring left -->
+  <circle cx="63" cy="110" r="5" fill="none" stroke="#00c9b1" stroke-width="2"/>
+  <circle cx="137" cy="110" r="5" fill="none" stroke="#00c9b1" stroke-width="2"/>
+  <!-- ZAYA badge at bottom -->
+  <rect x="30" y="162" width="140" height="24" rx="12" fill="rgba(0,0,0,0.3)" clip-path="url(#circle)"/>
+  <text x="100" y="179" text-anchor="middle" font-family="'Nunito Sans',sans-serif" font-size="13" font-weight="800" fill="#7fffd4" letter-spacing="2" clip-path="url(#circle)">ZAYA</text>
+</svg>
