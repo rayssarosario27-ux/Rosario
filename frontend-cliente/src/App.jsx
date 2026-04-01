@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Stethoscope, MessageCircle, Accessibility, Eye } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Stethoscope } from 'lucide-react';
 import '../styles/Home.css';
 
 const Home = () => {
-  const navigate = useNavigate();
-
   const abrirWhatsZaya = () => {
     const numeroWhats = "5521999999999"; 
     const mensagem = encodeURIComponent("Olá Zaya! Preciso de ajuda com um agendamento.");

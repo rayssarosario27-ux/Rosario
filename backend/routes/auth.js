@@ -54,7 +54,7 @@ async function registroPaciente(req, res) {
 
     // Hash da senha
     const senhaHash = await bcrypt.hash(senha, 10);
-    const codigoVerificacao = Math.random().toString(36).substr(2, 6).toUpperCase();
+    const codigoVerificacao = Math.random().toString(36).substring(2, 8).toUpperCase();
 
     // 3. Criar paciente (Incluindo a coluna carteirinha)
     const result = await req.pool.query(
