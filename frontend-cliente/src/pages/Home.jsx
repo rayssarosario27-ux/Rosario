@@ -96,7 +96,50 @@ const Home = () => {
         {/* Banner Zaya — primeiro abaixo do nav */}
         <section className="zaya-banner-section">
           <div className="zaya-banner-container">
-            <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img" />
+            {/* Fundo da imagem (se existir) */}
+            <img src="/zaya-banner.jpg" alt="" className="zaya-full-img" aria-hidden="true" />
+
+            {/* Conteúdo por cima */}
+            <div className="zaya-banner-overlay">
+              <div className="zaya-banner-inner">
+                {/* Avatar animado da Zaya */}
+                <div className="zaya-avatar-wrap">
+                  <div className="zaya-avatar-ring" />
+                  <div className="zaya-avatar-ring zaya-ring-2" />
+                  <div className="zaya-avatar-circle">
+                    <span className="zaya-avatar-emoji">🤖</span>
+                  </div>
+                  <div className="zaya-online-dot" />
+                </div>
+
+                {/* Texto + balão de fala */}
+                <div className="zaya-banner-text">
+                  <div className="zaya-banner-tag">Assistente Virtual 24h</div>
+                  <h2 className="zaya-banner-title">
+                    Olá! Sou a <span>Zaya</span> ✨
+                  </h2>
+                  <div className="zaya-chat-bubble">
+                    <p className="zaya-bubble-text">
+                      Posso agendar sua consulta, tirar dúvidas sobre exames e muito mais —
+                      a qualquer hora do dia!
+                    </p>
+                    <div className="zaya-typing">
+                      <span /><span /><span />
+                    </div>
+                  </div>
+                  <a
+                    href={WHATSAPP_ZAYA}
+                    className="btn-zaya-banner"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="zaya-btn-icon">💬</span>
+                    Falar com a Zaya agora
+                    <span className="zaya-btn-arrow">→</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -158,7 +201,12 @@ const Home = () => {
                 <div className="service-icon"><Search size={28} /></div>
                 <span>Corpo Clínico</span>
               </button>
-              <button className="service-card" onClick={() => navigate('/unidades')}>
+              <button
+                className="service-card"
+                onClick={() => {
+                  document.getElementById('unidades')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
                 <div className="service-icon"><MapPin size={28} /></div>
                 <span>Unidades</span>
               </button>
@@ -181,7 +229,7 @@ const Home = () => {
         </section>
 
         {/* Encontre uma clínica */}
-        <section className="clinica-section">
+        <section id="unidades" className="clinica-section">
           <div className="clinica-inner">
             <div className="section-header centered">
               <span className="section-tag">Localização</span>

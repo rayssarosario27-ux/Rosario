@@ -284,8 +284,8 @@
 .bio-step {
   background: #fff;
   border-radius: 20px;
-  padding: 48px 40px;
-  max-width: 500px;
+  padding: 40px 36px;
+  max-width: 520px;
   width: 100%;
   box-shadow: 0 20px 60px rgba(0, 122, 138, 0.15);
   text-align: center;
@@ -293,7 +293,7 @@
 }
 
 .bio-header {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .bio-icon {
@@ -303,7 +303,7 @@
 
 .bio-header h2 {
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: #0d3b3e;
   margin-bottom: 10px;
@@ -315,11 +315,73 @@
   line-height: 1.6;
 }
 
+/* ── Assistant bubble ── */
+.bio-assistant-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(135deg, #e0faf7, #f0fffe);
+  border: 1.5px solid #00c9b1;
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  text-align: left;
+  animation: bubblePop 0.3s ease;
+}
+
+@keyframes bubblePop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.bio-assistant-avatar {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  animation: assistantPulse 2s ease-in-out infinite;
+}
+
+@keyframes assistantPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.12); }
+}
+
+.bio-assistant-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bio-assistant-label {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #007a8a;
+  line-height: 1.4;
+}
+
+/* Progress bar inside bubble */
+.bio-progress-bar-wrap {
+  height: 5px;
+  background: #b2ede7;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bio-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00c9b1, #00a896);
+  border-radius: 10px;
+  transition: width 0.05s linear;
+}
+
+/* ── Camera area ── */
 .bio-camera-area {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .bio-video-frame {
@@ -330,6 +392,25 @@
   overflow: hidden;
   border: 4px solid #00c9b1;
   box-shadow: 0 0 0 8px rgba(0, 201, 177, 0.12);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.bio-video-frame.scanning {
+  border-color: #f97316;
+  box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.12),
+              0 0 30px rgba(249, 115, 22, 0.2);
+  animation: scanPulse 1s ease-in-out infinite;
+}
+
+.bio-video-frame.ready {
+  border-color: #25d366;
+  box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.15),
+              0 0 30px rgba(37, 211, 102, 0.2);
+}
+
+@keyframes scanPulse {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.12), 0 0 20px rgba(249, 115, 22, 0.15); }
+  50%       { box-shadow: 0 0 0 12px rgba(249, 115, 22, 0.2), 0 0 40px rgba(249, 115, 22, 0.25); }
 }
 
 .bio-video {
@@ -347,11 +428,91 @@
   pointer-events: none;
 }
 
+/* Direction arrow */
+.bio-direction-arrow {
+  position: absolute;
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  animation: arrowBounce 0.6s ease-in-out infinite alternate;
+  z-index: 5;
+}
+
+.arrow-right { right: 10px; top: 50%; transform: translateY(-50%); }
+.arrow-left  { left: 10px;  top: 50%; transform: translateY(-50%); }
+.arrow-up    { top: 10px;   left: 50%; transform: translateX(-50%); }
+.arrow-down  { bottom: 10px; left: 50%; transform: translateX(-50%); }
+
+@keyframes arrowBounce {
+  from { opacity: 0.7; }
+  to   { opacity: 1; transform: translateY(-50%) scale(1.25); }
+}
+
+.arrow-up, .arrow-down {
+  animation: arrowBounceV 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes arrowBounceV {
+  from { opacity: 0.7; }
+  to   { opacity: 1; transform: translateX(-50%) scale(1.25); }
+}
+
+/* Step emoji overlay */
+.bio-step-emoji {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  padding: 2px 10px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Step dots */
+.bio-step-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.bio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d0f0ec;
+  border: 2px solid #b2ede7;
+  transition: all 0.3s;
+}
+
+.bio-dot.active {
+  background: #f97316;
+  border-color: #f97316;
+  transform: scale(1.25);
+}
+
+.bio-dot.done {
+  background: #00c9b1;
+  border-color: #00c9b1;
+}
+
+/* Hints */
 .bio-hint {
   font-size: 13px;
   color: #4a7c80;
   font-weight: 600;
-  max-width: 280px;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+.bio-hint-success {
+  color: #007a8a;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .btn-bio-capture {
@@ -376,6 +537,7 @@
   box-shadow: 0 8px 24px rgba(0, 168, 150, 0.5);
 }
 
+/* Captured */
 .bio-captured-area {
   display: flex;
   flex-direction: column;
@@ -460,9 +622,7 @@
   font-size: 14px;
 }
 
-.bio-error svg {
-  flex-shrink: 0;
-}
+.bio-error svg { flex-shrink: 0; }
 
 /* Mobile — stack vertically */
 @media (max-width: 768px) {
