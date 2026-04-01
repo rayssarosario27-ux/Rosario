@@ -98,11 +98,16 @@ const Home = () => {
         <section className="zaya-banner-section">
           <div className="zaya-banner-container">
             <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img" />
-            <button
-              className="btn-zaya-overlay"
-              onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
-              aria-label="Fale com a Zaya no WhatsApp"
-            />
+            <div className="zaya-overlay-wrapper">
+              <button
+                className="btn-zaya-overlay"
+                onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
+                aria-label="Fale com a Zaya no WhatsApp"
+              >
+                <span className="chat-icon">💬</span>
+                Falar com a Zaya
+              </button>
+            </div>
           </div>
         </section>
 

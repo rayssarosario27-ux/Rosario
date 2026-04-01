@@ -162,43 +162,51 @@
 }
 
 /* ==================== BOTÃO ZAYA COM ANIMAÇÕES ==================== */
-.btn-zaya-overlay {
-  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-  background-size: 200% auto;
-  color: white;
-  border: none;
-  padding: 15px 40px;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 50px;
-  cursor: pointer;
+.zaya-overlay-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.btn-zaya-overlay {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  background-size: 200% auto;
+  color: white;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  padding: 16px 44px;
+  font-size: 17px;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  border-radius: 50px;
+  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 28px rgba(18, 140, 126, 0.55), 0 2px 8px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  z-index: 10;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .btn-zaya-overlay:hover {
-  animation: shimmer 2s infinite;
-  transform: translate(-50%, -50%) translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+  background: linear-gradient(135deg, #128c7e 0%, #25d366 100%);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 14px 38px rgba(18, 140, 126, 0.65), 0 4px 14px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 .btn-zaya-overlay:active {
-  transform: translate(-50%, -50%) translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* ÍCONE DO CHAT COM ANIMAÇÃO */
 .btn-zaya-overlay .chat-icon {
   display: inline-block;
-  font-size: 20px;
+  font-size: 22px;
   animation: bounce 1.5s ease-in-out infinite;
 }
 
@@ -799,4 +807,62 @@
     padding: 0 16px;
   }
   .dr-name {
-    font-size: *
+    font-size: 13px;
+  }
+  .dr-sub {
+    display: none;
+  }
+  .home-hero {
+    flex-direction: column;
+    gap: 32px;
+    padding: 48px 16px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-image img {
+    max-height: 280px;
+  }
+  .services-section {
+    padding: 48px 16px;
+  }
+  .dora-section {
+    padding: 48px 16px;
+  }
+  .dora-container h3 {
+    font-size: 1.4rem;
+  }
+  .clinica-section {
+    padding: 48px 16px;
+  }
+  .clinica-search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-buscar,
+  .btn-localizar {
+    width: 100%;
+    justify-content: center;
+  }
+  .home-footer {
+    padding: 28px 16px;
+  }
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .btn-zaya-overlay {
+    font-size: 14px;
+    padding: 13px 28px;
+  }
+}
