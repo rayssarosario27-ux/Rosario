@@ -160,17 +160,77 @@
   height: auto;
   display: block;
 }
+
+/* ==================== BOTÃO ZAYA COM ANIMAÇÕES ==================== */
 .btn-zaya-overlay {
-  position: absolute;
-  top: 61%;
-  left: 6.5%;
-  width: 13%;
-  height: 6%;
-  background: transparent;
-  color: transparent;
+  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+  background-size: 200% auto;
+  color: white;
   border: none;
+  padding: 15px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
   cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   z-index: 10;
+}
+
+.btn-zaya-overlay:hover {
+  animation: shimmer 2s infinite;
+  transform: translate(-50%, -50%) translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+}
+
+.btn-zaya-overlay:active {
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+/* ÍCONE DO CHAT COM ANIMAÇÃO */
+.btn-zaya-overlay .chat-icon {
+  display: inline-block;
+  font-size: 20px;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO SHIMMER (brilho deslizante) */
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* ANIMAÇÃO BOUNCE (pulo do ícone) */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* EFEITO HOVER - BRILHO PASANDO PELO BOTÃO */
+.btn-zaya-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+  border-radius: 50px;
+  pointer-events: none;
+}
+
+.btn-zaya-overlay:hover::after {
+  left: 100%;
 }
 
 /* === HERO === */
@@ -739,193 +799,4 @@
     padding: 0 16px;
   }
   .dr-name {
-    font-size: 13px;
-  }
-  .btn-nav-ghost {
-    padding: 7px 14px;
-    font-size: 12px;
-  }
-  .btn-nav-solid {
-    padding: 7px 16px;
-    font-size: 12px;
-  }
-
-  /* Hero */
-  .home-hero {
-    flex-direction: column;
-    text-align: center;
-    padding: 48px 20px;
-    gap: 36px;
-  }
-  .hero-content {
-    max-width: 100%;
-  }
-  .hero-image {
-    order: -1;
-    width: 100%;
-  }
-  .hero-image img {
-    max-height: 320px;
-  }
-  .hero-title {
-    font-size: 2rem;
-  }
-  .hero-cta-group {
-    justify-content: center;
-  }
-  .btn-primary-cta,
-  .btn-secondary-cta {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Serviços */
-  .services-section {
-    padding: 60px 20px;
-  }
-  .section-title {
-    font-size: 1.65rem;
-  }
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  .service-card {
-    padding: 24px 16px;
-  }
-
-  /* Dora */
-  .dora-section {
-    padding: 60px 20px;
-  }
-  .dora-container h3 {
-    font-size: 1.4rem;
-  }
-
-  /* Clínica */
-  .clinica-section {
-    padding: 60px 20px;
-  }
-  .clinica-search-box {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .clinica-input-wrap {
-    min-width: unset;
-    width: 100%;
-  }
-  .btn-buscar,
-  .btn-localizar {
-    width: 100%;
-    justify-content: center;
-  }
-  .clinica-map {
-    height: 260px;
-  }
-
-  /* Footer */
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
-  .footer-contact {
-    justify-content: center;
-  }
-}
-
-/* Mobile (480px) */
-@media (max-width: 480px) {
-  /* Navbar — esconde subtítulo */
-  .dr-sub {
-    display: none;
-  }
-  .logo-icon-bg {
-    padding: 7px;
-  }
-  .dr-name {
-    font-size: 12px;
-  }
-  .btn-nav-ghost {
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-  .btn-nav-solid {
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-
-  /* Hero */
-  .hero-title {
-    font-size: 1.75rem;
-  }
-  .hero-desc {
-    font-size: 14px;
-  }
-  .hero-image img {
-    max-height: 240px;
-  }
-  .btn-primary-cta {
-    font-size: 14px;
-    padding: 13px 28px;
-  }
-  .btn-secondary-cta {
-    font-size: 13px;
-    padding: 12px 20px;
-  }
-
-  /* Serviços */
-  .services-section {
-    padding: 48px 16px;
-  }
-  .section-title {
-    font-size: 1.45rem;
-  }
-  .service-card {
-    padding: 20px 12px;
-    gap: 10px;
-  }
-  .service-icon {
-    width: 52px;
-    height: 52px;
-  }
-
-  /* Dora */
-  .dora-section {
-    padding: 48px 16px;
-  }
-  .dora-container h3 {
-    font-size: 1.2rem;
-  }
-  .dora-container p {
-    font-size: 14px;
-  }
-  .btn-dora {
-    padding: 13px 32px;
-    font-size: 14px;
-  }
-
-  /* Clínica */
-  .clinica-section {
-    padding: 48px 16px;
-  }
-  .clinica-map {
-    height: 220px;
-  }
-  .clinica-card-btns {
-    flex-direction: column;
-  }
-  .btn-ver-mapa,
-  .btn-agendar-clinica {
-    width: 100%;
-    text-align: center;
-  }
-
-  /* WhatsApp */
-  .whatsapp-float {
-    width: 52px;
-    height: 52px;
-    bottom: 20px;
-    right: 16px;
-  }
-}
+    font-size: *
