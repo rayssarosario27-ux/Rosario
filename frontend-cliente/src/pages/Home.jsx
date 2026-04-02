@@ -3,17 +3,19 @@ import { useNavigate, Link } from 'react-router-dom';
 import {
   Stethoscope, Calendar, FileText, Search, MapPin,
   MessageCircle, Accessibility, Eye, Phone, Navigation,
-  Clock, Star
+  Clock, Star, User
 } from 'lucide-react';
 import '../styles/Home.css';
 
-const WHATSAPP_ZAYA = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
-const WHATSAPP_EQUIPE = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
+const WHATSAPP_ZAYA = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
+const WHATSAPP_EQUIPE = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
 
-const Home = () => {
+const Home = ({ paciente }) => {
   const navigate = useNavigate();
   const [enderecoSearch, setEnderecoSearch] = useState('');
   const [buscando, setBuscando] = useState(false);
+
+  const isLogado = !!paciente;
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -56,6 +58,19 @@ const Home = () => {
     }
   };
 
+  // First 3 cards: navigate to login if not logged in; to page if logged in
+  const handleServiceCard = (route) => {
+    if (isLogado) navigate(route);
+    else navigate('/auth');
+  };
+
+  const servicos = [
+    { icon: <Calendar size={28} />, label: 'Marcar Consulta', route: '/marcar-consulta' },
+    { icon: <FileText size={28} />, label: 'Exames Online',   route: '/exames' },
+    { icon: <Search size={28} />,   label: 'Corpo Clínico',   route: '/corpo-clinico' },
+    { icon: <MapPin size={28} />,   label: 'Unidades',        route: null }, // scroll para mapa
+  ];
+
   return (
     <div className="home-wrapper">
       {/* VLibras Acessibilidade */}
@@ -87,17 +102,30 @@ const Home = () => {
             </div>
           </div>
           <div className="nav-actions">
-            <Link to="/auth" className="btn-nav-ghost">Entrar</Link>
-            <Link to="/auth?mode=register" className="btn-nav-solid">Agendar</Link>
+            {isLogado ? (
+              <>
+                <Link to="/dashboard" className="btn-nav-ghost">
+                  <User size={15} style={{ marginRight: 5 }} />
+                  {paciente.nome?.split(' ')[0]}
+                </Link>
+                <Link to="/marcar-consulta" className="btn-nav-solid">Agendar</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth" className="btn-nav-ghost">Entrar</Link>
+                <Link to="/auth?mode=register" className="btn-nav-solid">Agendar</Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
 
       <main>
-        {/* Banner Zaya — primeiro abaixo do nav */}
+        {/* Banner Zaya */}
         <section className="zaya-banner-section">
           <div className="zaya-banner-container">
-            <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img" />
+            <img src="/zaya-banner.jpg" alt="Fale com a Zaya" className="zaya-full-img"
+              onError={(e) => { e.target.style.display = 'none'; }} />
             <button
               className="btn-zaya-overlay"
               onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
@@ -106,7 +134,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Hero — abaixo do banner */}
+        {/* Hero */}
         <section className="home-hero">
           <div className="hero-content">
             <span className="hero-tag">Cuidado que você merece</span>
@@ -121,7 +149,7 @@ const Home = () => {
             <div className="hero-cta-group">
               <button
                 className="btn-primary-cta"
-                onClick={() => navigate('/auth?mode=register')}
+                onClick={() => isLogado ? navigate('/marcar-consulta') : navigate('/auth?mode=register')}
               >
                 Agendar Agora
               </button>
@@ -147,36 +175,57 @@ const Home = () => {
               <h2 className="section-title">Serviços mais procurados</h2>
             </div>
             <div className="services-grid">
-              <div className="service-card">
-                <div className="service-icon"><Calendar size={28} /></div>
-                <span>Marcar Consulta</span>
-              </div>
-              <div className="service-card">
-                <div className="service-icon"><FileText size={28} /></div>
-                <span>Exames Online</span>
-              </div>
-              <div className="service-card">
-                <div className="service-icon"><Search size={28} /></div>
-                <span>Corpo Clínico</span>
-              </div>
-              <div className="service-card">
-                <div className="service-icon"><MapPin size={28} /></div>
-                <span>Unidades</span>
-              </div>
+              {servicos.map(({ icon, label, route }, idx) => (
+                <div
+                  key={label}
+                  className="service-card"
+                  onClick={() => {
+                    if (idx < 3) handleServiceCard(route);
+                    else document.querySelector('.clinica-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && (idx < 3 ? handleServiceCard(route) : null)}
+                >
+                  <div className="service-icon">{icon}</div>
+                  <span>{label}</span>
+                  {idx < 3 && !isLogado && (
+                    <span className="service-login-hint">Faça login para acessar</span>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Assistente 24hrs */}
+        {/* Assistente — Zaya profile */}
         <section className="dora-section">
           <div className="dora-container">
+            <div className="zaya-profile-card">
+              <div className="zaya-avatar">
+                <img
+                  src="/zaya-perfil.jpg"
+                  alt="Zaya — Assistente Virtual"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentNode.classList.add('zaya-avatar-fallback');
+                  }}
+                />
+                <span className="zaya-avatar-initials">Z</span>
+              </div>
+              <div className="zaya-profile-info">
+                <div className="zaya-name">Zaya</div>
+                <div className="zaya-title">Assistente Virtual — Clínica Dr. Eduardo</div>
+                <div className="zaya-status"><span className="zaya-dot"></span> Online agora</div>
+              </div>
+            </div>
             <h3>FALE COM A NOSSA ASSISTENTE 24HRS</h3>
-            <p>Dúvidas? Nossa assistente virtual está pronta para ajudar a qualquer momento.</p>
+            <p>Dúvidas? A Zaya está pronta para ajudar a qualquer momento pelo WhatsApp.</p>
             <button
               className="btn-dora"
               onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}
             >
-              Iniciar Conversa
+              Iniciar Conversa com a Zaya
             </button>
           </div>
         </section>
@@ -249,7 +298,7 @@ const Home = () => {
                     </a>
                     <button
                       className="btn-agendar-clinica"
-                      onClick={() => navigate('/auth?mode=register')}
+                      onClick={() => isLogado ? navigate('/marcar-consulta') : navigate('/auth?mode=register')}
                     >
                       Agendar consulta
                     </button>
@@ -278,13 +327,13 @@ const Home = () => {
 
       {/* WhatsApp flutuante */}
       <a
-        href="https://wa.me/5521999999999"
+        href="https://wa.me/5521973113276"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"
-        aria-label="Contato via WhatsApp"
+        aria-label="Contato via WhatsApp com a Zaya"
       >
-        <MessageCircle size={28} color="#fff" />
+        <img src="/zaya-banner.jpg" alt="Zaya" className="whatsapp-float-avatar" />
       </a>
     </div>
   );

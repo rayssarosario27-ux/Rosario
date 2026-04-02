@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -20,6 +21,28 @@ app.use(cors({
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// ==========================================
+// RATE LIMITING
+// ==========================================
+const limiterGeral = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { erro: '❌ Muitas requisições, tente novamente em alguns minutos.' }
+});
+
+const limiterAuth = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { erro: '❌ Muitas tentativas de acesso. Aguarde 15 minutos.' }
+});
+
+app.use('/api/auth', limiterAuth);
+app.use('/api', limiterGeral);
 
 // ==========================================
 // BANCO DE DADOS
@@ -47,11 +70,45 @@ app.use((req, res, next) => {
 // ROTAS DE AUTENTICAÇÃO
 // ==========================================
 const authRoutes = require('./routes/auth');
+const { autenticarToken } = require('./middleware/auth');
 
 app.post('/api/auth/registro-paciente', authRoutes.registroPaciente);
 app.post('/api/auth/login-paciente', authRoutes.loginPaciente);
 app.post('/api/auth/login-admin', authRoutes.loginAdmin);
 app.post('/api/auth/verificar-email', authRoutes.verificarEmail);
+app.post('/api/auth/esqueci-senha', authRoutes.esqueciSenha);
+app.post('/api/auth/resetar-senha', authRoutes.resetarSenha);
+app.get('/api/auth/perfil', autenticarToken, authRoutes.obterPerfil);
+app.patch('/api/auth/perfil', autenticarToken, authRoutes.atualizarPerfil);
+app.post('/api/auth/biometria', autenticarToken, authRoutes.atualizarBiometria);
+
+// ==========================================
+// ROTAS CRM / LEADS
+// ==========================================
+app.use('/api/leads', require('./routes/leads'));
+
+// ==========================================
+// ROTAS CONVERSAS / MENSAGENS
+// ==========================================
+app.use('/api/conversations', require('./routes/conversations'));
+
+// ==========================================
+// ROTAS AGENDA INTERNA
+// ==========================================
+app.use('/api/providers', require('./routes/providers'));
+app.use('/api/services', require('./routes/services'));
+app.use('/api/availability', require('./routes/availability'));
+app.use('/api/appointments', require('./routes/appointments'));
+
+// ==========================================
+// ROTAS AUTOMAÇÃO
+// ==========================================
+app.use('/api/automation', require('./routes/automation'));
+
+// ==========================================
+// ROTAS WHATSAPP WEBHOOK
+// ==========================================
+app.use('/api/whatsapp', require('./routes/whatsapp'));
 
 // ==========================================
 // HEALTH CHECK

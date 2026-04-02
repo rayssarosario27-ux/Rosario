@@ -1,0 +1,363 @@
+.agenda-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa 0%, #f0f4f8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.agenda-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 720px;
+  overflow: hidden;
+}
+
+/* Steps */
+.agenda-steps {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #adb5bd;
+  transition: all 0.3s;
+}
+
+.step.active { color: #008b8b; }
+.step.done   { color: #198754; }
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #e9ecef;
+  color: #adb5bd;
+  transition: all 0.3s;
+}
+
+.step.active .step-num { background: #00ced1; color: white; }
+.step.done .step-num   { background: #198754; color: white; }
+
+/* Section */
+.agenda-section {
+  padding: 32px;
+}
+
+.agenda-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1a1a2e;
+  margin: 0 0 24px;
+  font-size: 1.2rem;
+}
+
+/* Nav */
+.agenda-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.btn-avancar {
+  background: linear-gradient(135deg, #00ced1, #008b8b);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-avancar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-avancar:not(:disabled):hover { opacity: 0.9; }
+
+.btn-voltar {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-voltar:hover { background: #dee2e6; }
+
+/* Serviços */
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.servico-card {
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.servico-card:hover   { border-color: #00ced1; background: #f0fdfe; }
+.servico-card.selected { border-color: #00ced1; background: #e0f7fa; }
+
+.svc-nome  { font-weight: 700; color: #1a1a2e; margin: 0 0 6px; }
+.svc-info  { font-size: 0.82rem; color: #6c757d; margin: 0; }
+.svc-preco { font-size: 0.88rem; font-weight: 600; color: #008b8b; margin: 4px 0 0; }
+
+/* Providers */
+.providers-list { display: flex; flex-direction: column; gap: 12px; }
+
+.provider-card {
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.provider-card:hover   { border-color: #00ced1; background: #f0fdfe; }
+.provider-card.selected { border-color: #00ced1; background: #e0f7fa; }
+
+.pv-nome { font-weight: 700; color: #1a1a2e; margin: 0 0 2px; }
+.pv-esp  { font-size: 0.82rem; color: #6c757d; margin: 0; }
+
+/* Semana nav */
+.semana-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #1a1a2e;
+  font-size: 0.9rem;
+}
+
+.semana-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #008b8b;
+  display: flex;
+  align-items: center;
+}
+
+.semana-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Slots */
+.slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.slots-dia { min-width: 140px; }
+
+.slots-dia-label {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #008b8b;
+  text-transform: capitalize;
+  margin: 0 0 8px;
+}
+
+.slots-horarios {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slot-btn {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #495057;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.slot-btn:hover   { background: #e0f7fa; border-color: #00ced1; color: #008b8b; }
+.slot-btn.selected { background: #00ced1; border-color: #00ced1; color: white; }
+
+.slot-provider {
+  font-weight: 400;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Loading / empty */
+.agenda-loading { text-align: center; color: #6c757d; padding: 40px 0; }
+.agenda-empty   { text-align: center; color: #adb5bd; padding: 40px 0; font-size: 0.9rem; }
+
+/* Confirmado */
+.agenda-section.confirmado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 48px 32px;
+}
+
+.confirmado h2 { color: #198754; margin: 0; font-size: 1.4rem; }
+
+.confirmado-info {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px 28px;
+  text-align: left;
+  width: 100%;
+}
+
+.confirmado-info p { margin: 6px 0; color: #1a1a2e; }
+
+.confirmado-sub { color: #6c757d; font-size: 0.88rem; }
+
+/* === Provisional pages === */
+.agenda-page {
+  min-height: 100vh;
+  background: #f4fffe;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+}
+.agenda-header {
+  background: linear-gradient(135deg, #00c9b1 0%, #007a8a 100%);
+  padding: 40px 32px 48px;
+  color: white;
+}
+.btn-agenda-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+.btn-agenda-back:hover { background: rgba(255,255,255,0.25); }
+.agenda-header h1 { margin: 0 0 6px; font-size: 28px; font-weight: 800; }
+.agenda-header p { margin: 0; opacity: 0.85; font-size: 15px; }
+.agenda-body {
+  max-width: 900px;
+  margin: -20px auto 0;
+  padding: 0 24px 60px;
+}
+.agenda-placeholder-card {
+  background: white;
+  border-radius: 18px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,122,138,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.agenda-placeholder-card h3 { font-size: 22px; font-weight: 800; color: #0d3b3e; margin: 0; }
+.agenda-placeholder-card p { color: #4a7c80; font-size: 15px; line-height: 1.7; max-width: 420px; margin: 0; }
+.btn-agenda-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 800;
+  transition: 0.2s;
+  margin-top: 8px;
+}
+.btn-agenda-wa:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+
+/* Corpo clínico grid */
+.corpo-clinico-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+.medico-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,122,138,0.08);
+  border: 1.5px solid #d0f0ec;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.medico-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0faf7, #c8f5ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.medico-card h4 { font-size: 15px; font-weight: 800; color: #0d3b3e; margin: 0; }
+.medico-esp { font-size: 13px; color: #007a8a; font-weight: 700; margin: 0; }
+.medico-crm { font-size: 11px; color: #aaa; margin: 0; }
+.medico-disponivel { font-size: 12px; font-weight: 700; }
+.medico-disponivel.sim { color: #15803d; }
+.medico-disponivel.nao { color: #e55; }
+.btn-agendar-medico {
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  width: 100%;
+  transition: 0.2s;
+}
+.btn-agendar-medico:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,168,150,0.35); }
