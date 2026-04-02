@@ -22,7 +22,7 @@ export default function MarcarConsulta({ paciente, token }) {
             Em breve você poderá marcar suas consultas diretamente por aqui. 
             Por enquanto, entre em contato com nossa equipe.
           </p>
-          <a href="https://wa.me/5521999999999" target="_blank" rel="noreferrer" className="btn-agenda-wa">
+          <a href="https://wa.me/5521973113276" target="_blank" rel="noreferrer" className="btn-agenda-wa">
             <Phone size={18} /> Agendar pelo WhatsApp
           </a>
         </div>

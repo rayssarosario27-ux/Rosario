@@ -7,8 +7,8 @@ import {
 } from 'lucide-react';
 import '../styles/Home.css';
 
-const WHATSAPP_ZAYA = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
-const WHATSAPP_EQUIPE = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
+const WHATSAPP_ZAYA = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
+const WHATSAPP_EQUIPE = `https://wa.me/5521973113276?text=${encodeURIComponent('Olá! Gostaria de mais informações sobre a Clínica Dr. Eduardo.')}`;
 
 const Home = ({ paciente }) => {
   const navigate = useNavigate();
@@ -327,7 +327,7 @@ const Home = ({ paciente }) => {
 
       {/* WhatsApp flutuante */}
       <a
-        href="https://wa.me/5521999999999"
+        href="https://wa.me/5521973113276"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"

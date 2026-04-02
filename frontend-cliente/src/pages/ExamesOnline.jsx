@@ -22,7 +22,7 @@ export default function ExamesOnline({ paciente }) {
             Área em desenvolvimento. Em breve seus resultados de exames estarão disponíveis 
             aqui de forma segura e rápida.
           </p>
-          <a href="https://wa.me/5521999999999" target="_blank" rel="noreferrer" className="btn-agenda-wa">
+          <a href="https://wa.me/5521973113276" target="_blank" rel="noreferrer" className="btn-agenda-wa">
             <Phone size={18} /> Solicitar pelo WhatsApp
           </a>
         </div>
