@@ -331,9 +331,9 @@ const Home = ({ paciente }) => {
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"
-        aria-label="Contato via WhatsApp"
+        aria-label="Contato via WhatsApp com a Zaya"
       >
-        <MessageCircle size={28} color="#fff" />
+        <img src="/zaya-banner.jpg" alt="Zaya" className="whatsapp-float-avatar" />
       </a>
     </div>
   );
