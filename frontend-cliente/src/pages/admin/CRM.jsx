@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Users, Calendar, TrendingUp, MessageCircle, Plus, Filter, RefreshCw } from 'lucide-react';
+import { Users, Calendar, TrendingUp, MessageCircle, Plus, RefreshCw } from 'lucide-react';
 import '../../styles/admin/CRM.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -16,7 +16,7 @@ const STATUS_COLUNAS = [
 export default function CRM() {
   const [leads, setLeads] = useState([]);
   const [carregando, setCarregando] = useState(false);
-  const [filtroUnidade, setFiltroUnidade] = useState('');
+  const [filtroUnidade] = useState('');
   const [modalLead, setModalLead] = useState(null);
   const [novoLead, setNovoLead] = useState({ nome: '', telefone: '', canal: 'whatsapp' });
   const [mostrarFormNovoLead, setMostrarFormNovoLead] = useState(false);

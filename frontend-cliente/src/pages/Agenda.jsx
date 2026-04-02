@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, Clock, User, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
-import '../../styles/Agenda.css';
+import '../styles/Agenda.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -46,7 +46,7 @@ export default function Agenda() {
       .then(r => r.json())
       .then(d => { if (d.sucesso) setServices(d.services || []); })
       .catch(console.error);
-  }, [token]);
+  }, [token, clinicId]);
 
   // Carregar profissionais após serviço selecionado
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function Agenda() {
       .then(r => r.json())
       .then(d => { if (d.sucesso) setProviders(d.providers || []); })
       .catch(console.error);
-  }, [servicoSel, token]);
+  }, [servicoSel, token, unitId]);
 
   // Carregar slots
   const carregarSlots = useCallback(async () => {
@@ -82,7 +82,7 @@ export default function Agenda() {
     } finally {
       setCarregando(false);
     }
-  }, [servicoSel, providerSel, semanaOffset, token]);
+  }, [servicoSel, providerSel, semanaOffset, token, unitId]);
 
   useEffect(() => {
     if (etapa === 3) carregarSlots();

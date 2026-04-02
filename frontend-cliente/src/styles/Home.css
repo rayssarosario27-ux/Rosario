@@ -877,11 +877,59 @@
 }
 
 /* Tablet (768px) */
+
+/* Tablet (768px) */
 @media (max-width: 768px) {
-  /* Navbar */
   .nav-container {
     height: 60px;
     padding: 0 16px;
   }
-  .dr-name {
-    font-size: *
+  .dr-name { font-size: 12px; }
+  .dr-sub { display: none; }
+  .nav-actions { gap: 8px; }
+  .btn-nav-ghost, .btn-nav-solid { padding: 8px 14px; font-size: 12px; }
+
+  .home-hero {
+    flex-direction: column-reverse;
+    padding: 40px 20px;
+    text-align: center;
+    min-height: auto;
+  }
+  .hero-image { max-width: 260px; }
+  .hero-title { font-size: 2rem; }
+  .hero-desc { font-size: 14px; }
+  .hero-cta-group { justify-content: center; }
+
+  .services-section { padding: 50px 16px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .service-card { padding: 22px 14px; font-size: 13px; }
+  .service-icon { width: 50px; height: 50px; }
+
+  .zaya-profile-card { flex-direction: column; text-align: center; padding: 18px 20px; }
+  .dora-container h3 { font-size: 1.4rem; }
+
+  .clinica-section { padding: 50px 16px; }
+  .clinica-search-box { flex-direction: column; }
+  .clinica-layout { grid-template-columns: 1fr; }
+  .clinica-map { height: 260px; }
+  .section-title { font-size: 1.6rem; }
+
+  .zaya-banner-section { display: none; }
+
+  .accessibility-bar { display: none; }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hero-title { font-size: 1.6rem; }
+  .btn-primary-cta, .btn-secondary-cta { font-size: 13px; padding: 12px 18px; }
+  .clinica-card { padding: 16px; }
+  .section-title { font-size: 1.3rem; }
+}

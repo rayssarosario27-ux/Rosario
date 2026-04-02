@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Phone } from 'lucide-react';
+import { ArrowLeft, Calendar, Phone } from 'lucide-react';
 import '../styles/Agenda.css';
 
 export default function MarcarConsulta({ paciente, token }) {
