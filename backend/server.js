@@ -70,11 +70,17 @@ app.use((req, res, next) => {
 // ROTAS DE AUTENTICAÇÃO
 // ==========================================
 const authRoutes = require('./routes/auth');
+const { autenticarToken } = require('./middleware/auth');
 
 app.post('/api/auth/registro-paciente', authRoutes.registroPaciente);
 app.post('/api/auth/login-paciente', authRoutes.loginPaciente);
 app.post('/api/auth/login-admin', authRoutes.loginAdmin);
 app.post('/api/auth/verificar-email', authRoutes.verificarEmail);
+app.post('/api/auth/esqueci-senha', authRoutes.esqueciSenha);
+app.post('/api/auth/resetar-senha', authRoutes.resetarSenha);
+app.get('/api/auth/perfil', autenticarToken, authRoutes.obterPerfil);
+app.patch('/api/auth/perfil', autenticarToken, authRoutes.atualizarPerfil);
+app.post('/api/auth/biometria', autenticarToken, authRoutes.atualizarBiometria);
 
 // ==========================================
 // ROTAS CRM / LEADS
