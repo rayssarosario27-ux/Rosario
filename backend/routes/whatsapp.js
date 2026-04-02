@@ -16,6 +16,7 @@ router.get('/webhook', (req, res) => {
     console.log('✅ WhatsApp webhook verificado');
     // Sanitize: challenge must be a numeric string per Meta's API spec
     const sanitizedChallenge = String(challenge).replace(/[^0-9]/g, '');
+    if (!sanitizedChallenge) return res.sendStatus(400);
     return res.status(200).send(sanitizedChallenge);
   }
   res.sendStatus(403);

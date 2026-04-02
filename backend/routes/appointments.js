@@ -2,7 +2,33 @@ const { autenticarToken } = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 
-// ── Listar agendamentos ───────────────────────────────────────────────────────
+// ── Consultas do paciente logado ──────────────────────────────────────────────
+router.get('/minhas', autenticarToken, async (req, res) => {
+  try {
+    if (req.usuario.role !== 'paciente') {
+      return res.status(403).json({ erro: '❌ Acesso negado' });
+    }
+    const result = await req.pool.query(
+      `SELECT a.id, a.start_at, a.end_at, a.status, a.observacoes,
+              p.nome AS provider_nome,
+              s.nome AS service_nome,
+              s.duracao_minutos,
+              u.nome AS unit_nome
+       FROM appointments a
+       JOIN providers p ON p.id = a.provider_id
+       JOIN services  s ON s.id = a.service_id
+       JOIN units     u ON u.id = a.unit_id
+       WHERE a.paciente_id = $1
+       ORDER BY a.start_at DESC
+       LIMIT 50`,
+      [req.usuario.id]
+    );
+    res.json({ sucesso: true, consultas: result.rows });
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+});
+
 router.get('/', autenticarToken, async (req, res) => {
   try {
     const { unit_id, provider_id, lead_id, status, date_from, date_to, page = 1, limit = 50 } = req.query;

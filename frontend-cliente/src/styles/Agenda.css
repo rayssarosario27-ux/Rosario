@@ -249,3 +249,115 @@
 .confirmado-info p { margin: 6px 0; color: #1a1a2e; }
 
 .confirmado-sub { color: #6c757d; font-size: 0.88rem; }
+
+/* === Provisional pages === */
+.agenda-page {
+  min-height: 100vh;
+  background: #f4fffe;
+  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+}
+.agenda-header {
+  background: linear-gradient(135deg, #00c9b1 0%, #007a8a 100%);
+  padding: 40px 32px 48px;
+  color: white;
+}
+.btn-agenda-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+.btn-agenda-back:hover { background: rgba(255,255,255,0.25); }
+.agenda-header h1 { margin: 0 0 6px; font-size: 28px; font-weight: 800; }
+.agenda-header p { margin: 0; opacity: 0.85; font-size: 15px; }
+.agenda-body {
+  max-width: 900px;
+  margin: -20px auto 0;
+  padding: 0 24px 60px;
+}
+.agenda-placeholder-card {
+  background: white;
+  border-radius: 18px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0,122,138,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.agenda-placeholder-card h3 { font-size: 22px; font-weight: 800; color: #0d3b3e; margin: 0; }
+.agenda-placeholder-card p { color: #4a7c80; font-size: 15px; line-height: 1.7; max-width: 420px; margin: 0; }
+.btn-agenda-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 800;
+  transition: 0.2s;
+  margin-top: 8px;
+}
+.btn-agenda-wa:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+
+/* Corpo clínico grid */
+.corpo-clinico-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+.medico-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,122,138,0.08);
+  border: 1.5px solid #d0f0ec;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.medico-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0faf7, #c8f5ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.medico-card h4 { font-size: 15px; font-weight: 800; color: #0d3b3e; margin: 0; }
+.medico-esp { font-size: 13px; color: #007a8a; font-weight: 700; margin: 0; }
+.medico-crm { font-size: 11px; color: #aaa; margin: 0; }
+.medico-disponivel { font-size: 12px; font-weight: 700; }
+.medico-disponivel.sim { color: #15803d; }
+.medico-disponivel.nao { color: #e55; }
+.btn-agendar-medico {
+  background: linear-gradient(135deg, #00c9b1, #00a896);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  width: 100%;
+  transition: 0.2s;
+}
+.btn-agendar-medico:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,168,150,0.35); }

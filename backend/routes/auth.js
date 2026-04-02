@@ -40,7 +40,17 @@ function validarCPF(cpf) {
   return d2 === parseInt(digits[10]);
 }
 
-// ─── Email template helper ────────────────────────────────────────────────────
+// ─── HTML escape helper ───────────────────────────────────────────────────────
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+
 function htmlEmail(titulo, corpoHtml) {
   return `
     <div style="font-family:Arial,sans-serif;background:#f0f4f8;padding:30px">
@@ -77,10 +87,6 @@ async function registroPaciente(req, res) {
 
     if (convenio && convenio.trim() !== '' && (!carteirinha || carteirinha.trim() === '')) {
       return res.status(400).json({ erro: '❌ Para atendimentos via convênio, a carteirinha é obrigatória.' });
-    }
-
-    if (!sem_complemento && complemento === undefined) {
-      // complemento is optional, not required
     }
 
     const existe = await req.pool.query(
@@ -120,8 +126,7 @@ async function registroPaciente(req, res) {
         to: email,
         subject: '🔐 Confirme seu Email — Clínica Dr. Eduardo',
         html: htmlEmail('Confirmação de Cadastro', `
-          <p style="color:#333;font-size:15px">Olá <strong>${nome}</strong>,</p>
-          <p style="color:#555">Seu código de verificação é:</p>
+          <p style="color:#333;font-size:15px">Olá <strong>${escapeHtml(nome)}</strong>,</p>
           <div style="background:linear-gradient(135deg,#00c9b1,#007a8a);border-radius:12px;padding:24px;text-align:center;margin:20px 0">
             <span style="color:white;font-size:38px;font-weight:800;letter-spacing:10px">${codigoVerificacao}</span>
           </div>
@@ -227,7 +232,7 @@ async function esqueciSenha(req, res) {
         to: email,
         subject: '🔐 Código de Recuperação de Senha — Clínica Dr. Eduardo',
         html: htmlEmail('Recuperação de Senha', `
-          <p style="color:#333;font-size:15px">Olá <strong>${paciente.nome}</strong>,</p>
+          <p style="color:#333;font-size:15px">Olá <strong>${escapeHtml(paciente.nome)}</strong>,</p>
           <p style="color:#555">Recebemos uma solicitação para redefinir sua senha. Use o código abaixo:</p>
           <div style="background:linear-gradient(135deg,#00c9b1,#007a8a);border-radius:12px;padding:24px;text-align:center;margin:20px 0">
             <span style="color:white;font-size:38px;font-weight:800;letter-spacing:10px">${codigo}</span>
