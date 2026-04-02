@@ -1,0 +1,300 @@
+.crm-container {
+  min-height: 100vh;
+  background: #f0f4f8;
+  padding: 24px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Header */
+.crm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.crm-header h1 {
+  font-size: 1.6rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.crm-subtitle {
+  color: #6c757d;
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+.crm-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-icon {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover { background: #f8f9fa; }
+
+.btn-primary {
+  background: linear-gradient(135deg, #00ced1, #008b8b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.9; }
+
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Stats */
+.crm-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.crm-stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: #008b8b;
+}
+
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1;
+}
+
+.stat-lab {
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin: 4px 0 0;
+}
+
+/* Kanban */
+.crm-kanban {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+}
+
+.kanban-col {
+  min-width: 220px;
+  max-width: 240px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-col-header {
+  padding: 14px 16px;
+  border-top: 4px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.88rem;
+  background: #fafafa;
+}
+
+.kanban-count {
+  background: #e9ecef;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.kanban-cards {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 65vh;
+}
+
+.kanban-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.kanban-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.card-nome {
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.card-tel {
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin: 0 0 6px;
+}
+
+.card-canal {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.canal-whatsapp { background: #d4edda; color: #155724; }
+.canal-instagram { background: #fce4ec; color: #880e4f; }
+.canal-site { background: #e3f2fd; color: #0d47a1; }
+.canal-indicacao { background: #fff3cd; color: #856404; }
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+.card-tag {
+  background: #e8f4f8;
+  color: #007b8e;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.7rem;
+}
+
+.kanban-empty {
+  text-align: center;
+  color: #adb5bd;
+  font-size: 0.82rem;
+  padding: 20px 0;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  min-width: 320px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-box h2 { margin-top: 0; color: #1a1a2e; }
+
+.modal-label { font-weight: 600; margin-bottom: 10px; }
+
+.modal-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.btn-status {
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.82rem;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.btn-status:hover { opacity: 0.8; }
+
+.modal-close {
+  background: #e9ecef;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #495057;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Form novo lead */
+.form-novo-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.form-novo-lead input,
+.form-novo-lead select {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-novo-lead input:focus,
+.form-novo-lead select:focus {
+  border-color: #00ced1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions button:last-child {
+  background: #e9ecef;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #495057;
+}

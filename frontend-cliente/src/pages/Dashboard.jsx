@@ -57,7 +57,9 @@ export default function Dashboard({ paciente, setToken, setPaciente }) {
       </div>
 
       <div className="action-buttons">
-        <button className="btn-agendar">📅 Agendar Consulta</button>
+        <button className="btn-agendar" onClick={() => window.location.href = '/agendar'}>
+          📅 Agendar Consulta
+        </button>
         <button className="btn-historico">📋 Meu Histórico</button>
         <button className="btn-perfil">👤 Editar Perfil</button>
       </div>
