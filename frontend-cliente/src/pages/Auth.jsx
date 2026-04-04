@@ -306,6 +306,18 @@ export default function Auth({ setToken, setPaciente }) {
             >
               {loading ? '⏳ Aguarde...' : isLogin ? 'Entrar' : 'Cadastrar'}
             </button>
+
+            {isLogin && (
+              <p className="auth-link-secondary">
+                <button
+                  type="button"
+                  className="btn-link"
+                  onClick={() => navigate('/recuperar-senha')}
+                >
+                  Esqueci minha senha
+                </button>
+              </p>
+            )}
           </form>
         </div>
       </div>

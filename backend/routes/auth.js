@@ -145,10 +145,91 @@ async function loginAdmin(req, res) {
   } catch (erro) { res.status(500).json({ erro: erro.message }); }
 }
 
+async function esqueciSenha(req, res) {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ erro: '❌ Email é obrigatório' });
+
+    const result = await req.pool.query(
+      'SELECT * FROM pacientes WHERE email = $1 AND verificado = true',
+      [email]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ erro: '❌ Email não encontrado ou conta não verificada' });
+    }
+
+    const paciente = result.rows[0];
+    const codigo = crypto.randomInt(0, 1000000).toString().padStart(6, '0');
+    await req.pool.query('UPDATE pacientes SET codigo_verificacao = $1 WHERE id = $2', [codigo, paciente.id]);
+
+    try {
+      await transporter.sendMail({
+        to: email,
+        subject: '🔐 Recuperação de Senha - Clínica Dr. Eduardo',
+        html: `
+          <div style="font-family: Arial; background: linear-gradient(135deg, #00ced1 0%, #008b8b 100%); padding: 40px; border-radius: 15px;">
+            <h2 style="color: white; text-align: center;">🔐 Recuperação de Senha</h2>
+            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+              <p style="color: #333; font-size: 16px;">Olá <strong>${paciente.nome}</strong>,</p>
+              <p style="color: #666;">Seu código para redefinir a senha é:</p>
+              <div style="background: linear-gradient(135deg, #00ced1, #008b8b); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h1 style="color: white; margin: 0; font-size: 36px;">${codigo}</h1>
+              </div>
+              <p style="color: #999; font-size: 12px;">Este código expira em 1 hora</p>
+            </div>
+          </div>
+        `
+      });
+    } catch (emailErr) {
+      console.error('⚠️ Erro ao enviar email:', emailErr);
+    }
+
+    res.json({ sucesso: true, mensagem: 'Código enviado para seu email', pacienteId: paciente.id });
+  } catch (erro) {
+    res.status(500).json({ erro: erro.message });
+  }
+}
+
+async function resetarSenha(req, res) {
+  try {
+    const { pacienteId, codigo, novaSenha, confirmarSenha } = req.body;
+
+    if (!pacienteId || !codigo || !novaSenha || !confirmarSenha) {
+      return res.status(400).json({ erro: '❌ Todos os campos são obrigatórios' });
+    }
+
+    if (novaSenha !== confirmarSenha) {
+      return res.status(400).json({ erro: '❌ As senhas não conferem' });
+    }
+
+    const result = await req.pool.query('SELECT * FROM pacientes WHERE id = $1', [pacienteId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ erro: '❌ Paciente não encontrado' });
+    }
+
+    const paciente = result.rows[0];
+    if (paciente.codigo_verificacao !== codigo) {
+      return res.status(400).json({ erro: '❌ Código inválido' });
+    }
+
+    const senhaHash = await bcrypt.hash(novaSenha, 10);
+    await req.pool.query(
+      'UPDATE pacientes SET senha_hash = $1, codigo_verificacao = NULL WHERE id = $2',
+      [senhaHash, pacienteId]
+    );
+
+    res.json({ sucesso: true, mensagem: '✅ Senha redefinida com sucesso!' });
+  } catch (erro) {
+    res.status(500).json({ erro: erro.message });
+  }
+}
+
 // Exportação Única e Completa
 module.exports = {
   registroPaciente,
   loginPaciente,
   loginAdmin,
-  verificarEmail
+  verificarEmail,
+  esqueciSenha,
+  resetarSenha
 };

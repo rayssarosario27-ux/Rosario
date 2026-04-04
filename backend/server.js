@@ -52,6 +52,8 @@ app.post('/api/auth/registro-paciente', authRoutes.registroPaciente);
 app.post('/api/auth/login-paciente', authRoutes.loginPaciente);
 app.post('/api/auth/login-admin', authRoutes.loginAdmin);
 app.post('/api/auth/verificar-email', authRoutes.verificarEmail);
+app.post('/api/auth/esqueci-senha', authRoutes.esqueciSenha);
+app.post('/api/auth/resetar-senha', authRoutes.resetarSenha);
 
 // ==========================================
 // HEALTH CHECK

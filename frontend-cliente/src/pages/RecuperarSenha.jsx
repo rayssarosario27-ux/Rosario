@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import '../styles/RecuperarSenha.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export default function RecuperarSenha({ onVoltar }) {
   const navigate = useNavigate();
-  const voltar = onVoltar || (() => navigate('/'));
+  const voltar = onVoltar || (() => navigate('/auth'));
 
   const [etapa, setEtapa] = useState(1);
   const [email, setEmail] = useState('');
@@ -24,7 +26,7 @@ export default function RecuperarSenha({ onVoltar }) {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/esqueci-senha', {
+      const response = await fetch(`${API_URL}/api/auth/esqueci-senha`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -40,6 +42,7 @@ export default function RecuperarSenha({ onVoltar }) {
         setErro(data.erro || '❌ Erro ao enviar email');
       }
     } catch (err) {
+      console.error('Erro ao solicitar recuperação:', err);
       setErro('❌ Erro ao conectar com servidor');
     }
     setLoading(false);
@@ -58,7 +61,7 @@ export default function RecuperarSenha({ onVoltar }) {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/resetar-senha', {
+      const response = await fetch(`${API_URL}/api/auth/resetar-senha`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -78,6 +81,7 @@ export default function RecuperarSenha({ onVoltar }) {
         setErro(data.erro || '❌ Erro ao resetar senha');
       }
     } catch (err) {
+      console.error('Erro ao resetar senha:', err);
       setErro('❌ Erro ao conectar com servidor');
     }
     setLoading(false);
@@ -111,8 +115,8 @@ export default function RecuperarSenha({ onVoltar }) {
               </div>
             </div>
 
-            {erro && <div className="alert alert-error">{erro}</div>}
-            {mensagem && <div className="alert alert-success">{mensagem}</div>}
+            {erro && <div className="rs-alert error">{erro}</div>}
+            {mensagem && <div className="rs-alert success">{mensagem}</div>}
 
             <button type="submit" className="btn-submit" disabled={loading}>
               {loading ? '⏳ Enviando...' : '✉️ Enviar Código'}
@@ -164,8 +168,8 @@ export default function RecuperarSenha({ onVoltar }) {
               </div>
             </div>
 
-            {erro && <div className="alert alert-error">{erro}</div>}
-            {mensagem && <div className="alert alert-success">{mensagem}</div>}
+            {erro && <div className="rs-alert error">{erro}</div>}
+            {mensagem && <div className="rs-alert success">{mensagem}</div>}
 
             <button type="submit" className="btn-submit" disabled={loading}>
               {loading ? '⏳ Resetando...' : '✅ Redefinir Senha'}
