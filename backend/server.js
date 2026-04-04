@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -20,6 +21,17 @@ app.use(cors({
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// ==========================================
+// RATE LIMITING
+// ==========================================
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { erro: '❌ Muitas tentativas. Tente novamente em 15 minutos.' }
+});
 
 // ==========================================
 // BANCO DE DADOS
@@ -48,12 +60,12 @@ app.use((req, res, next) => {
 // ==========================================
 const authRoutes = require('./routes/auth');
 
-app.post('/api/auth/registro-paciente', authRoutes.registroPaciente);
-app.post('/api/auth/login-paciente', authRoutes.loginPaciente);
-app.post('/api/auth/login-admin', authRoutes.loginAdmin);
-app.post('/api/auth/verificar-email', authRoutes.verificarEmail);
-app.post('/api/auth/esqueci-senha', authRoutes.esqueciSenha);
-app.post('/api/auth/resetar-senha', authRoutes.resetarSenha);
+app.post('/api/auth/registro-paciente', authLimiter, authRoutes.registroPaciente);
+app.post('/api/auth/login-paciente', authLimiter, authRoutes.loginPaciente);
+app.post('/api/auth/login-admin', authLimiter, authRoutes.loginAdmin);
+app.post('/api/auth/verificar-email', authLimiter, authRoutes.verificarEmail);
+app.post('/api/auth/esqueci-senha', authLimiter, authRoutes.esqueciSenha);
+app.post('/api/auth/resetar-senha', authLimiter, authRoutes.resetarSenha);
 
 // ==========================================
 // HEALTH CHECK

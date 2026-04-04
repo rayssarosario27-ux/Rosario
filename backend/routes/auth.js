@@ -175,7 +175,7 @@ async function esqueciSenha(req, res) {
               <div style="background: linear-gradient(135deg, #00ced1, #008b8b); padding: 20px; border-radius: 10px; margin: 20px 0;">
                 <h1 style="color: white; margin: 0; font-size: 36px;">${codigo}</h1>
               </div>
-              <p style="color: #999; font-size: 12px;">Este código expira em 1 hora</p>
+              <p style="color: #999; font-size: 12px;">Use este código para redefinir sua senha</p>
             </div>
           </div>
         `
