@@ -2,6 +2,8 @@ import React from 'react';
 import { Calendar, Heart, LogOut, Users, Stethoscope } from 'lucide-react';
 import '../styles/Dashboard.css';
 
+const WHATSAPP_ZAYA = `https://wa.me/5521999999999?text=${encodeURIComponent('Olá Zaya! Preciso de ajuda com um agendamento.')}`;
+
 export default function Dashboard({ paciente, setToken, setPaciente }) {
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -57,7 +59,7 @@ export default function Dashboard({ paciente, setToken, setPaciente }) {
       </div>
 
       <div className="action-buttons">
-        <button className="btn-agendar">📅 Agendar Consulta</button>
+        <button className="btn-agendar" onClick={() => window.open(WHATSAPP_ZAYA, '_blank')}>📅 Agendar Consulta</button>
         <button className="btn-historico">📋 Meu Histórico</button>
         <button className="btn-perfil">👤 Editar Perfil</button>
       </div>
