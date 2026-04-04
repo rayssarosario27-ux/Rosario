@@ -233,3 +233,22 @@
     gap: 0;
   }
 }
+/* === Alertas de erro e sucesso === */
+.alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 12px;
+}
+
+.alert-error {
+  background: #fff0f0;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+  background: #f0fff9;
+  color: #00796b;
+  border: 1px solid #b2dfdb;
+}
