@@ -11,7 +11,8 @@ export default function App() {
     try {
       const saved = localStorage.getItem('paciente');
       return saved ? JSON.parse(saved) : null;
-    } catch {
+    } catch (err) {
+      console.error('localStorage parse error:', err);
       return null;
     }
   });

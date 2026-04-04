@@ -107,7 +107,8 @@ export default function Auth({ setToken, setPaciente }) {
           setErro(data.erro || '❌ Erro ao realizar cadastro');
         }
       }
-    } catch {
+    } catch (err) {
+      console.error('Erro na autenticação:', err);
       setErro('❌ Erro ao conectar com o servidor');
     }
     setLoading(false);
@@ -136,7 +137,8 @@ export default function Auth({ setToken, setPaciente }) {
       } else {
         setErro(data.erro || '❌ Código inválido');
       }
-    } catch {
+    } catch (err) {
+      console.error('Erro na verificação de email:', err);
       setErro('❌ Erro ao conectar com o servidor');
     }
     setLoading(false);
