@@ -271,14 +271,14 @@ const Home = () => {
           <div className="footer-contact">
             <span><MapPin size={13} /> Barra da Tijuca, RJ</span>
             <span>·</span>
-            <span>(21) 99999-9999</span>
+            <span>(21) 99063-7586</span>
           </div>
         </div>
       </footer>
 
       {/* WhatsApp flutuante */}
       <a
-        href="https://wa.me/5521999999999"
+        href="https://wa.me/21990637586"
         className="whatsapp-float"
         target="_blank"
         rel="noreferrer"

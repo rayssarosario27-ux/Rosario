@@ -1,235 +1,28 @@
-/* === AUTH PAGE — Verde Água === */
-
-.auth-page {
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
-  font-family: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
-  background: #f0fffe;
-  margin: 0;
-  padding: 0;
+/* ...existing code... */
+.auth-links {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 1rem;
 }
 
-/* Lado esquerdo — gradiente verde água */
-.auth-hero {
-  flex: 1.2;
-  background: linear-gradient(135deg, #00c9b1 0%, #00a896 55%, #007a8a 100%);
-  position: relative;
-  display: flex;
+.auth-link {
+  color: #00BFA5;
+  text-decoration: none;
+  margin: 0 4px;
+  transition: color 0.2s;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
+.auth-link:hover {
+  color: #008c7a;
+  text-decoration: underline;
 }
 
-.hero-overlay h1 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.2;
-  margin-bottom: 14px;
+.auth-divider {
+  margin: 0 8px;
+  color: #bbb;
 }
 
-.hero-overlay p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 15px;
-  line-height: 1.6;
+.destaque {
+  font-weight: bold;
 }
-
-.back-link {
-  position: absolute;
-  top: 36px;
-  left: 36px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  padding: 9px 18px;
-  border-radius: 8px;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  transition: 0.2s;
-}
-.back-link:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
-}
-
-/* Lado direito — formulário */
-.auth-form-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  padding: 32px 40px;
-  overflow-y: auto;
-}
-
-.form-box {
-  width: 100%;
-  max-width: 400px;
-}
-
-.form-box.scrollable {
-  max-height: 90vh;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.form-box h2 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 1.7rem;
-  font-weight: 800;
-  color: #0d3b3e;
-  margin-bottom: 28px;
-}
-
-.input-group {
-  margin-bottom: 14px;
-}
-
-.input-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: #007a8a;
-  margin-bottom: 6px;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.input-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #00c9b1;
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 11px 12px 11px 42px;
-  border: 1.5px solid #c8f0eb;
-  border-radius: 10px;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 14px;
-  color: #0d3b3e;
-  background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.input-wrapper input:focus {
-  border-color: #00c9b1;
-  box-shadow: 0 0 0 3px rgba(0, 201, 177, 0.12);
-}
-
-.btn-auth-submit {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #00c9b1, #00a896);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 800;
-  transition: all 0.25s;
-  box-shadow: 0 4px 14px rgba(0, 168, 150, 0.35);
-  margin-top: 6px;
-}
-
-.btn-auth-submit:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(0, 168, 150, 0.45);
-}
-
-.btn-auth-submit.disabled {
-  background: #d4e8e6;
-  color: #8ab8b4;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-}
-
-.input-row {
-  display: flex;
-  gap: 10px;
-}
-
-.checkbox-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-  font-size: 13px;
-  color: #4a7c80;
-  font-weight: 600;
-}
-
-/* Mobile — stack vertically */
-@media (max-width: 768px) {
-  .auth-page {
-    flex-direction: column;
-    height: auto;
-    min-height: 100vh;
-  }
-  .auth-hero {
-    flex: 0 0 auto;
-    min-height: 200px;
-  }
-  .hero-overlay {
-    padding: 28px 24px;
-    position: relative;
-    inset: auto;
-  }
-  .hero-overlay h1 {
-    font-size: 1.5rem;
-  }
-  .back-link {
-    position: static;
-    margin-bottom: 20px;
-    align-self: flex-start;
-    display: inline-flex;
-  }
-  .auth-form-container {
-    flex: 1;
-    padding: 28px 20px;
-    align-items: flex-start;
-  }
-  .form-box {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-overlay {
-    padding: 20px 16px;
-  }
-  .hero-overlay h1 {
-    font-size: 1.3rem;
-  }
-  .auth-form-container {
-    padding: 24px 16px;
-  }
-  .input-row {
-    flex-direction: column;
-    gap: 0;
-  }
-}
+/* ...existing code... */
