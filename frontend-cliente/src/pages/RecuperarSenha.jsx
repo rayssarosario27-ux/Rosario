@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, ArrowLeft, Smartphone } from 'lucide-react';
 import '../styles/RecuperarSenha.css';
 
 export default function RecuperarSenha({ onVoltar }) {
@@ -8,7 +8,8 @@ export default function RecuperarSenha({ onVoltar }) {
   const voltar = onVoltar || (() => navigate('/'));
 
   const [etapa, setEtapa] = useState(1);
-  const [email, setEmail] = useState('');
+  const [canal, setCanal] = useState('email');
+  const [contato, setContato] = useState('');
   const [pacienteId, setPacienteId] = useState(null);
   const [codigo, setCodigo] = useState('');
   const [novaSenha, setNovaSenha] = useState('');
@@ -27,7 +28,7 @@ export default function RecuperarSenha({ onVoltar }) {
       const response = await fetch('http://localhost:5000/api/auth/esqueci-senha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ canal, contato })
       });
 
       const data = await response.json();
@@ -37,7 +38,7 @@ export default function RecuperarSenha({ onVoltar }) {
         setMensagem('✅ ' + data.mensagem);
         setEtapa(2);
       } else {
-        setErro(data.erro || '❌ Erro ao enviar email');
+        setErro(data.erro || '❌ Erro ao enviar código');
       }
     } catch (err) {
       setErro('❌ Erro ao conectar com servidor');
@@ -97,15 +98,37 @@ export default function RecuperarSenha({ onVoltar }) {
 
         {etapa === 1 ? (
           <form onSubmit={handleEsqueciSenha}>
-            <div className="form-group">
-              <label>📧 Digite seu Email</label>
-              <div className="input-wrapper">
-                <Mail size={18} />
+            <div className="form-group canal-group">
+              <label>
                 <input
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="radio"
+                  name="canal"
+                  value="email"
+                  checked={canal === 'email'}
+                  onChange={() => setCanal('email')}
+                />
+                <Mail size={16} /> E-mail
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="canal"
+                  value="whatsapp"
+                  checked={canal === 'whatsapp'}
+                  onChange={() => setCanal('whatsapp')}
+                />
+                <Smartphone size={16} /> WhatsApp
+              </label>
+            </div>
+            <div className="form-group">
+              <label>{canal === 'email' ? '📧 Digite seu Email' : '📱 Digite seu WhatsApp'}</label>
+              <div className="input-wrapper">
+                {canal === 'email' ? <Mail size={18} /> : <Smartphone size={18} />}
+                <input
+                  type={canal === 'email' ? 'email' : 'text'}
+                  placeholder={canal === 'email' ? 'seu@email.com' : '21999999999'}
+                  value={contato}
+                  onChange={(e) => setContato(e.target.value)}
                   required
                 />
               </div>
@@ -119,7 +142,7 @@ export default function RecuperarSenha({ onVoltar }) {
             </button>
 
             <p className="recuperar-info">
-              Enviaremos um código de recuperação para seu email.
+              Enviaremos um código de recuperação para seu {canal === 'email' ? 'email' : 'WhatsApp'}.
             </p>
           </form>
         ) : (

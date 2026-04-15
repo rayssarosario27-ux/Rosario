@@ -54,6 +54,18 @@ app.post('/api/auth/login-admin', authRoutes.loginAdmin);
 app.post('/api/auth/verificar-email', authRoutes.verificarEmail);
 
 // ==========================================
+// ROTAS DE BIOMETRIA FACIAL
+// ==========================================
+app.post('/api/facial/salvar', authRoutes.salvarBiometriaFacial);
+app.post('/api/facial/buscar', authRoutes.buscarPorBiometria);
+app.post('/api/facial/log', authRoutes.registrarFacialLog);
+
+// ==========================================
+// ROTAS DE CRIAÇÃO DE USUÁRIOS ADMIN
+// ==========================================
+app.post('/api/admin/criar', authRoutes.criarUsuarioAdmin);
+
+// ==========================================
 // HEALTH CHECK
 // ==========================================
 app.get('/health', (req, res) => {

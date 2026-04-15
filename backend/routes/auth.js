@@ -103,46 +103,76 @@ async function registroPaciente(req, res) {
   }
 }
 
-// ... (Restante das funções verificarEmail, loginPaciente, loginAdmin, esqueciSenha, resetarSenha permanecem iguais) ...
-
-async function verificarEmail(req, res) {
+// ====== BIOMETRIA FACIAL ======
+// Salvar biometria facial do paciente
+async function salvarBiometriaFacial(req, res) {
+  const { pacienteId, facial_biometria } = req.body;
+  if (!pacienteId || !facial_biometria) {
+    return res.status(400).json({ erro: 'Paciente e biometria são obrigatórios.' });
+  }
   try {
-    const { pacienteId, codigo } = req.body;
-    const result = await req.pool.query('SELECT * FROM pacientes WHERE id = $1', [pacienteId]);
-    if (result.rows.length === 0) return res.status(404).json({ erro: '❌ Paciente não encontrado' });
-    const paciente = result.rows[0];
-    if (paciente.codigo_verificacao !== codigo) return res.status(400).json({ erro: '❌ Código inválido' });
-    await req.pool.query('UPDATE pacientes SET verificado = true, codigo_verificacao = NULL WHERE id = $1', [pacienteId]);
-    const token = gerarToken(pacienteId, paciente.email, 'paciente');
-    res.json({ sucesso: true, mensagem: '✅ Email verificado!', token, paciente: { id: paciente.id, nome: paciente.nome, email: paciente.email } });
-  } catch (erro) { res.status(500).json({ erro: erro.message }); }
+    await req.pool.query(
+      'UPDATE pacientes SET facial_biometria = $1, facial_ultima_atualizacao = NOW() WHERE id = $2',
+      [Buffer.from(facial_biometria, 'base64'), pacienteId]
+    );
+    res.json({ sucesso: true, mensagem: 'Biometria facial salva.' });
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao salvar biometria.' });
+  }
 }
 
-async function loginPaciente(req, res) {
+// Buscar paciente por biometria facial (simples, por igualdade exata)
+async function buscarPorBiometria(req, res) {
+  const { facial_biometria } = req.body;
+  if (!facial_biometria) return res.status(400).json({ erro: 'Biometria obrigatória.' });
   try {
-    const { email, senha } = req.body;
-    const result = await req.pool.query('SELECT * FROM pacientes WHERE email = $1 AND verificado = true', [email]);
-    if (result.rows.length === 0) return res.status(401).json({ erro: '❌ Credenciais inválidas ou conta não verificada' });
-    const paciente = result.rows[0];
-    const senhaValida = await bcrypt.compare(senha, paciente.senha_hash);
-    if (!senhaValida) return res.status(401).json({ erro: '❌ Credenciais inválidas' });
-    await req.pool.query('UPDATE pacientes SET ultimo_acesso = CURRENT_TIMESTAMP WHERE id = $1', [paciente.id]);
-    const token = gerarToken(paciente.id, paciente.email, 'paciente');
-    res.json({ sucesso: true, token, paciente: { id: paciente.id, nome: paciente.nome, email: paciente.email } });
-  } catch (erro) { res.status(500).json({ erro: erro.message }); }
+    const result = await req.pool.query(
+      'SELECT * FROM pacientes WHERE facial_biometria = $1',
+      [Buffer.from(facial_biometria, 'base64')]
+    );
+    if (result.rows.length === 0) return res.status(404).json({ erro: 'Paciente não encontrado.' });
+    res.json({ paciente: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar paciente.' });
+  }
 }
 
-async function loginAdmin(req, res) {
+// Registrar log de reconhecimento facial
+async function registrarFacialLog(req, res) {
+  const { pacienteId, local, motivo_consulta } = req.body;
+  if (!pacienteId) return res.status(400).json({ erro: 'Paciente obrigatório.' });
   try {
-    const { email, senha } = req.body;
-    const result = await req.pool.query('SELECT * FROM admin WHERE email = $1', [email]);
-    if (result.rows.length === 0) return res.status(401).json({ erro: '❌ Acesso negado' });
-    const admin = result.rows[0];
-    const senhaValida = await bcrypt.compare(senha, admin.senha_hash);
-    if (!senhaValida) return res.status(401).json({ erro: '❌ Acesso negado' });
-    const token = gerarToken(admin.id, admin.email, 'admin');
-    res.json({ sucesso: true, token, admin: { id: admin.id, nome: admin.nome, email: admin.email } });
-  } catch (erro) { res.status(500).json({ erro: erro.message }); }
+    await req.pool.query(
+      'INSERT INTO facial_logs (paciente_id, local, motivo_consulta) VALUES ($1, $2, $3)',
+      [pacienteId, local || null, motivo_consulta || null]
+    );
+    res.json({ sucesso: true });
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao registrar log.' });
+  }
+}
+
+// ====== GERENCIAMENTO DE USUÁRIOS ADMIN ======
+// Criar usuário admin (TI)
+async function criarUsuarioAdmin(req, res) {
+  const { nome, email, senha, tipo } = req.body;
+  if (!nome || !email || !senha || !tipo) {
+    return res.status(400).json({ erro: 'Campos obrigatórios: nome, email, senha, tipo' });
+  }
+  try {
+    const existe = await req.pool.query('SELECT id FROM admins WHERE email = $1', [email]);
+    if (existe.rows.length > 0) {
+      return res.status(400).json({ erro: 'Email já cadastrado' });
+    }
+    const senhaHash = await bcrypt.hash(senha, 10);
+    await req.pool.query(
+      'INSERT INTO admins (nome, email, senha, tipo) VALUES ($1, $2, $3, $4)',
+      [nome, email, senhaHash, tipo]
+    );
+    res.json({ sucesso: true, mensagem: 'Usuário admin criado.' });
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao criar admin.' });
+  }
 }
 
 // Exportação Única e Completa
@@ -150,5 +180,9 @@ module.exports = {
   registroPaciente,
   loginPaciente,
   loginAdmin,
-  verificarEmail
+  verificarEmail,
+  salvarBiometriaFacial,
+  buscarPorBiometria,
+  registrarFacialLog,
+  criarUsuarioAdmin
 };

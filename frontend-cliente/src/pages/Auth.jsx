@@ -158,6 +158,26 @@ export default function Auth() {
             >
               {isLogin ? 'Entrar' : 'Cadastrar'}
             </button>
+
+            {isLogin && (
+              <div className="auth-extra-options">
+                <button
+                  type="button"
+                  className="auth-link"
+                  onClick={() => navigate('/recuperar-senha')}
+                >
+                  Esqueci minha senha
+                </button>
+                <span className="auth-link-sep">·</span>
+                <button
+                  type="button"
+                  className="auth-link"
+                  onClick={() => navigate('/auth?mode=register')}
+                >
+                  Não tem conta? Cadastre-se
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>
