@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, ArrowLeft, CreditCard, Phone, Smartphone, Hash } from 'lucide-react';
 import '../styles/Auth.css';
 
@@ -159,6 +159,28 @@ export default function Auth() {
               {isLogin ? 'Entrar' : 'Cadastrar'}
             </button>
           </form>
+
+          {/* Links de ação abaixo do formulário */}
+          {isLogin && (
+            <div className="auth-links">
+              <Link to="/recuperar-senha" className="auth-link">
+                Esqueci minha senha
+              </Link>
+              <span className="auth-divider">|</span>
+              <span>Não tem login? </span>
+              <Link to="?mode=register" className="auth-link destaque">
+                Cadastre-se
+              </Link>
+            </div>
+          )}
+          {!isLogin && (
+            <div className="auth-links">
+              <span>Já tem conta? </span>
+              <Link to="/auth" className="auth-link destaque">
+                Entrar
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
